@@ -1,19 +1,28 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Header() {
+	const active = { color: 'aqua' };
+
 	return (
 		<header>
 			<div className='inner'>
 				<h1>
-					<a href='#'>LOGO</a>
+					<NavLink exact to='/' activeStyle={active}>
+						Logo
+					</NavLink>
 				</h1>
 
 				<ul id='gnb'>
 					<li>
-						<a href='#'>Gallery</a>
+						<NavLink to='/gallery' activeStyle={active}>
+							Gallery
+						</NavLink>
 					</li>
 					<li>
-						<a href='#'>Youtube</a>
+						<NavLink to='/youtube' activeStyle={active}>
+							Youtube
+						</NavLink>
 					</li>
 				</ul>
 			</div>
