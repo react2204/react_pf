@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
 	const active = { color: 'aqua' };
 
 	return (
-		<header>
+		<header className={props.type}>
 			<div className='inner'>
 				<h1>
 					<NavLink exact to='/' activeStyle={active}>
