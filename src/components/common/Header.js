@@ -11,7 +11,7 @@ function Header(props) {
 			<div className='inner'>
 				<h1>
 					<NavLink exact to='/' activeStyle={active}>
-						Logo
+						<img src={props.logoSrc} />
 					</NavLink>
 				</h1>
 

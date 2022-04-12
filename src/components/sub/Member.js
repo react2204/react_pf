@@ -22,6 +22,7 @@ function Member() {
 				}}>
 				멤버정보 변경
 			</button>
+
 			<ul className='memberList'>
 				{members.map((member, idx) => {
 					return (
