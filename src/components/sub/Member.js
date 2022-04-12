@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 
 function Member() {
-	const frame = useRef(null);
+	let frame = useRef(null);
 
 	useEffect(() => {
-		console.log('member 컴포넌트 생성');
-		frame.current.classList.remove('on');
+		console.log('멤버 컴포넌트 생성');
 		frame.current.classList.add('on');
 
 		return () => {
-			console.log('member컴포넌트 소멸');
+			console.log('멤버 컴포넌트 소멸');
 		};
 	}, []);
 
