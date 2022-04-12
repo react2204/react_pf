@@ -8,13 +8,20 @@ function Member() {
 
 	useEffect(() => {
 		axios.get(`${path}/DB/member.json`).then((json) => {
-			//console.log(json.data.data);
 			setMembers(json.data.data);
 		});
 	}, []);
 
 	return (
 		<Layout name={'Member'}>
+			<button
+				onClick={() => {
+					const newMembers = [...members];
+					newMembers[0].name = 'Jane';
+					setMembers(newMembers);
+				}}>
+				멤버정보 변경
+			</button>
 			<ul className='memberList'>
 				{members.map((member, idx) => {
 					return (
