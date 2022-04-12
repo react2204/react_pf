@@ -18,14 +18,19 @@ function Youtube() {
 
 	return (
 		<Layout name={'Youtube'}>
-			{items.map((item, idx) => (
-				<article key={idx}>
-					<img src={item.snippet.thumbnails.medium.url} />
-					<h2>{item.snippet.title}</h2>
-					<p>{item.snippet.description}</p>
-					<span>{item.snippet.publishedAt}</span>
-				</article>
-			))}
+			{items.map((item, idx) => {
+				const desc = item.snippet.description;
+				const date = item.snippet.publishedAt;
+
+				return (
+					<article key={idx}>
+						<img src={item.snippet.thumbnails.medium.url} />
+						<h2>{item.snippet.title}</h2>
+						<p>{desc.length > 150 ? desc.substr(0, 150) + '...' : desc}</p>
+						<span>{date.split('T')[0]}</span>
+					</article>
+				);
+			})}
 		</Layout>
 	);
 }
