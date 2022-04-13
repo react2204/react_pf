@@ -36,7 +36,9 @@ function Youtube() {
 				})}
 			</Layout>
 
-			<Popup />
+			<Popup>
+				유튜브내용
+			</Popup>
 		</>
 	);
 }
