@@ -3,7 +3,7 @@ import Layout from '../common/Layout';
 
 function Location() {
   return (
-    <Layout name={'Locatioin'}>
+    <Layout name={'Location'}>
       찾아오는길
     </Layout>
   )
