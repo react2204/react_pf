@@ -27,7 +27,7 @@ const Pop = styled.aside`
     }
 
     img {
-      width: 100%; height: 1 00%; object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover;
     }
   }
 `
