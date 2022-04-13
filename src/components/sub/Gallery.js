@@ -6,7 +6,7 @@ const path = process.env.PUBLIC_URL;
 function Gallery() {
 	const key = '89aae050d1d8c006bdb5bf866029199d';
 	const method1 = 'flickr.interestingness.getList';
-	const num = 5;
+	const num = 20;
 	const url = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
 
 	const [items, setItems] = useState([]);

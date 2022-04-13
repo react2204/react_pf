@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 import Popup from '../common/Popup';
 
 function Youtube() {
+	const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
+		const num = 5;
+		const id = 'PLHtvRFLN5v-UVVpNfWqtgZ6YPs9ZJMWRK';
+		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&maxResults=${num}&playlistId=${id}`;
+		
 	const [items, setItems] = useState([]);
 	//팝업의 생성유무를 관리하는 state생성
 	const [open, setOpen] = useState(false);
@@ -11,10 +16,7 @@ function Youtube() {
 	const [index, setIndex] = useState(0);
 
 	useEffect(() => {
-		const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
-		const num = 5;
-		const id = 'PLHtvRFLN5v-UVVpNfWqtgZ6YPs9ZJMWRK';
-		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&maxResults=${num}&playlistId=${id}`;
+		
 
 		axios.get(url).then((json) => {
 			console.log(json.data.items);
