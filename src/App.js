@@ -13,6 +13,8 @@ import Content from './components/main/Content';
 import Youtube from './components/sub/Youtube';
 import Gallery from './components/sub/Gallery';
 import Member from './components/sub/Member';
+import Location from './components/sub/Location';
+
 const path = process.env.PUBLIC_URL;
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/member' component={Member} />
+			<Route path='/location' component={Location} />
 
 			<Footer />
 		</>
