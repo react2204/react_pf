@@ -27,6 +27,7 @@ function Gallery() {
 	return (
 		<Layout name={'Gallery'}>
 			<Box></Box>
+			<div className="box2"></div>
 		</Layout>
 	);
 }

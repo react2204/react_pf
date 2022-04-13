@@ -1,9 +1,11 @@
 import Layout from '../common/Layout';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Popup from '../common/Popup';
 
 function Youtube() {
 	const [items, setItems] = useState([]);
+
 	useEffect(() => {
 		const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
 		const num = 5;
@@ -17,22 +19,28 @@ function Youtube() {
 	}, []);
 
 	return (
-		<Layout name={'Youtube'}>
-			{items.map((item, idx) => {
-				const desc = item.snippet.description;
-				const date = item.snippet.publishedAt;
+		<>
+			<Layout name={'Youtube'}>
+				{items.map((item, idx) => {
+					const desc = item.snippet.description;
+					const date = item.snippet.publishedAt;
 
-				return (
-					<article key={idx}>
-						<img src={item.snippet.thumbnails.medium.url} />
-						<h2>{item.snippet.title}</h2>
-						<p>{desc.length > 150 ? desc.substr(0, 150) + '...' : desc}</p>
-						<span>{date.split('T')[0]}</span>
-					</article>
-				);
-			})}
-		</Layout>
+					return (
+						<article key={idx}>
+							<img src={item.snippet.thumbnails.medium.url} />
+							<h2>{item.snippet.title}</h2>
+							<p>{desc.length > 150 ? desc.substr(0, 150) + '...' : desc}</p>
+							<span>{date.split('T')[0]}</span>
+						</article>
+					);
+				})}
+			</Layout>
+
+			<Popup />
+		</>
 	);
 }
+
+
 
 export default Youtube;
