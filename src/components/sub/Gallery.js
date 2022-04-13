@@ -23,10 +23,20 @@ const Box = styled.div`
 	}
 `;
 
+const LinkBtn = styled.button`
+	display: block;
+	padding: 10px 20px;
+	background: aqua;
+	border: none;
+	border-raius: 5px;
+	color: #fff;
+`
+
 function Gallery() {
 	return (
 		<Layout name={'Gallery'}>
 			<Box></Box>
+			<LinkBtn>버튼</LinkBtn>
 			<div className="box2"></div>
 		</Layout>
 	);

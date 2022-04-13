@@ -5,6 +5,8 @@ import Popup from '../common/Popup';
 
 function Youtube() {
 	const [items, setItems] = useState([]);
+	//팝업의 생성유무를 관리하는 state생성
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
@@ -26,7 +28,8 @@ function Youtube() {
 					const date = item.snippet.publishedAt;
 
 					return (
-						<article key={idx}>
+						//클릭 이벤트 발생시 open 값 true로 변경
+						<article key={idx} onClick={()=>setOpen(true)}>
 							<img src={item.snippet.thumbnails.medium.url} />
 							<h2>{item.snippet.title}</h2>
 							<p>{desc.length > 150 ? desc.substr(0, 150) + '...' : desc}</p>
@@ -36,13 +39,14 @@ function Youtube() {
 				})}
 			</Layout>
 
-			<Popup>
-				유튜브내용
-			</Popup>
+			{/* open state값이 true일때 팝업이 보이고 그렇지 않으면 없앰 */}
+			{open ? (
+				<Popup setOpen={setOpen}>
+					<h1>Hello</h1>
+				</Popup>
+			) : null}
 		</>
 	);
 }
-
-
 
 export default Youtube;
