@@ -4,8 +4,9 @@ import Layout from '../common/Layout';
 function Location() {
 	const container = useRef(null);
 	const { kakao } = window;
-	//카카오맵 api를 통해서 생성된 인스턴스를 옮겨담을 state추가
 	const [map, setMap] = useState({});
+  //traffic보기 토글 기능을 위한 state추가
+  const [traffic, setTraffic] = useState(false);
 
 	useEffect(() => {
 		const options = {
@@ -14,25 +15,21 @@ function Location() {
 		};
 
 		const map = new kakao.maps.Map(container.current, options);
-		//인스턴스 map을 state map으로 옮겨담음
 		setMap(map);
 	}, []);
+
+  //traffic값이 변경될때마다 실행되는 useEffect호출
+  useEffect(()=>{
+    console.log(traffic);
+  }, [traffic]);
 
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
 
-      {/* 버튼 클릭시 각각 트래픽정보 on / off */}
-			<button
-				onClick={() => map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)}>
-				Traffic ON
-			</button>
-			<button
-				onClick={() =>
-					map.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
-				}>
-				Traffic OFF
-			</button>
+      {/* 해당 버튼을 클릭할때마다 기존 불린값을 반전시켜 토글기능실행 */}
+      <button onClick={()=>setTraffic(!traffic)}>{traffic ? 'Traffic OFF' : 'Traffic On'}</button>      
+			
 		</Layout>
 	);
 }
