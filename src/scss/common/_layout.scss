@@ -5,7 +5,7 @@
 		background: #bbb;
 	}
 
-	.inner {
+	>.inner {
 		width: 1180px;
 		min-height: 800px;
 		margin: 0px auto;
@@ -23,7 +23,7 @@
 	}
 
 	&.on {
-		.inner {
+		>.inner {
 			transform: translateY(0px);
 			opacity: 1;
 		}
@@ -32,7 +32,7 @@
 
 @media screen and (max-width: $tablet) {
 	.content {
-		.inner {
+		>.inner {
 			width: 100%;
 			padding: 0px 40px;
 		}

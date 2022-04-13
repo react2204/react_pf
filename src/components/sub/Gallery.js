@@ -23,7 +23,14 @@ function Gallery() {
 			<ul>
 				{items.map((item,idx)=>{
 					return (
-						<li key={idx}>list</li>
+						<li key={idx}>
+							<div className="inner">
+								<div className="pic">
+									<img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`} />
+								</div>
+								<h2>{item.title}</h2>
+							</div>
+						</li>
 					)
 				})}
 			</ul>
