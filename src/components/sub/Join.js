@@ -6,7 +6,8 @@ function Join() {
 		userid: '',
 		pwd1: '',
 		pwd2: '',
-    email: ''
+		email: '',
+    comments: '',
 	};
 	const [val, setVal] = useState(initVal);
 	const [err, setErr] = useState({});
@@ -32,8 +33,11 @@ function Join() {
 		if (val.pwd1 !== val.pwd2 || !val.pwd2) {
 			errs.pwd2 = '두개의 비밀번호를 동일하게 입력하세요.';
 		}
-    if( val.email < 5 || !/@/.test(val.email)){
-      errs.email = '이메일은 5글자이상 @입력하세요';
+		if (val.email < 5 || !/@/.test(val.email)) {
+			errs.email = '이메일은 5글자이상 @입력하세요';
+		}
+    if(val.comments.length<10){
+      errs.comments = '남기는 말은 10글자 이상 입력하세요';
     }
 
 		return errs;
@@ -49,10 +53,10 @@ function Join() {
 		setErr(check(val));
 	};
 
-  const handleReset = () => {
-    setVal(initVal);
-    setErr({});
-  }
+	const handleReset = () => {
+		setVal(initVal);
+		setErr({});
+	};
 
 	useEffect(() => {
 		console.log(err);
@@ -67,6 +71,7 @@ function Join() {
 					<table border='1'>
 						<caption>회원가입 정보입력</caption>
 						<tbody>
+							{/* userid */}
 							<tr>
 								<th scope='row'>
 									<label htmlFor='userid'>USER ID</label>
@@ -80,9 +85,10 @@ function Join() {
 										value={val.userid}
 										onChange={handleChange}
 									/>
-                  <span className="err">{err.userid}</span>
+									<span className='err'>{err.userid}</span>
 								</td>
 							</tr>
+							{/* password */}
 							<tr>
 								<th scope='row'>
 									<label htmlFor='pwd1'>PASSWORD</label>
@@ -96,7 +102,7 @@ function Join() {
 										value={val.pwd1}
 										onChange={handleChange}
 									/>
-                  <span className="err">{err.pwd1}</span>
+									<span className='err'>{err.pwd1}</span>
 								</td>
 							</tr>
 							<tr>
@@ -112,9 +118,10 @@ function Join() {
 										value={val.pwd2}
 										onChange={handleChange}
 									/>
-                  <span className="err">{err.pwd2}</span>
+									<span className='err'>{err.pwd2}</span>
 								</td>
 							</tr>
+							{/* email */}
 							<tr>
 								<th scope='row'>
 									<label htmlFor='email'>E-MAIL</label>
@@ -125,12 +132,29 @@ function Join() {
 										name='email'
 										id='email'
 										placeholder='이메일 주소를 입력하세요.'
-                    value={val.email}
-                    onChange={handleChange}
+										value={val.email}
+										onChange={handleChange}
 									/>
-                  <span className="err">{err.email}</span>
+									<span className='err'>{err.email}</span>
 								</td>
 							</tr>
+							{/* comments */}
+							<tr>
+								<th scope='row'>
+									<label htmlFor='comments'>LEAVE COMMENTS</label>
+								</th>
+								<td>
+									<textarea
+										name='comments'
+										id='comments'
+										cols='30'
+										rows='10'
+										value={val.comments}
+										onChange={handleChange}></textarea>
+                    <span className="err">{err.comments}</span>
+								</td>
+							</tr>
+							{/* btnSet */}
 							<tr>
 								<th colSpan='2'>
 									<input type='reset' value='CANCEL' onClick={handleReset} />
