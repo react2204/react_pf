@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Layout from '../common/Layout';
 
 function Location() {
+  const path = process.env.PUBLIC_URL;
 	const container = useRef(null);
 	const { kakao } = window;
 	const [map, setMap] = useState(null);  
@@ -9,26 +10,31 @@ function Location() {
 
 	useEffect(() => {
 		const options = {
-			center: new kakao.maps.LatLng(37.512742, 127.060810),
+			center: new kakao.maps.LatLng(37.512714519901536, 127.06064893707484),
 			level: 3,
 		};
 
 		const mapInfo = new kakao.maps.Map(container.current, options);
 		setMap(mapInfo);
+    
+    const markerPosition  = new kakao.maps.LatLng(37.512714519901536, 127.06064893707484); 
 
-    //마커 위치 인스턴스 생성
-    const markerPosition  = new kakao.maps.LatLng(37.512742, 127.060810); 
+    //마커 이미지 정보 추가
+    const imgSrc = `${path}/img/marker1.png`;
+    const imgSize = new kakao.maps.Size(232, 99);
+    const imgPos = {offset: new kakao.maps.Point(110, 90)};
+    const markerImg = new kakao.maps.MarkerImage(imgSrc, imgSize, imgPos);
 
-    // 마커를 생성합니다
+
     const marker = new kakao.maps.Marker({
-        position: markerPosition
+      position: markerPosition,
+      image: markerImg
     });
 
-    // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(mapInfo);
 	}, []);
 
- 
+
   useEffect(()=>{
     console.log(traffic);
     handleTraffic();
