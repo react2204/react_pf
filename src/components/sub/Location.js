@@ -56,6 +56,13 @@ function Location() {
 		
 		marker.setMap(mapInstance);
 
+
+    const mapTypeControl = new kakao.maps.MapTypeControl();   
+    mapInstance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
+   
+    const zoomControl = new kakao.maps.ZoomControl();
+    mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
+
     //지도 위치 가운데 이동 함수
     const mapInit = () =>{
       console.log('지도위치 가운데 변경')
