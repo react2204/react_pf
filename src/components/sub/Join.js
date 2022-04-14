@@ -6,6 +6,7 @@ function Join() {
 		userid: '',
 		pwd1: '',
 		pwd2: '',
+    email: ''
 	};
 	const [val, setVal] = useState(initVal);
 	const [err, setErr] = useState({});
@@ -19,8 +20,6 @@ function Join() {
 		if (val.userid.length < 5) {
 			errs.userid = '아이디를 5글자 이상 입력하세요';
 		}
-    //순서5 - 입력 비번1에 특수문자, 영어, 숫자, 5글자이상이 아니면
-    //새로운 에러객체 생성
 		if (
 			val.pwd1 < 5 ||
 			!eng.test(val.pwd1) ||
@@ -30,29 +29,26 @@ function Join() {
 			errs.pwd1 =
 				'비밀번호는 5글자 이상, 문자, 숫자, 특수문자를 모두 포함하세요';
 		}
-    //순서6 - 비번1, 비번2값이 다르면 에러객체 생성
 		if (val.pwd1 !== val.pwd2 || !val.pwd2) {
 			errs.pwd2 = '두개의 비밀번호를 동일하게 입력하세요.';
 		}
+    if( val.email < 5 || !/@/.test(val.email)){
+      errs.email = '이메일은 5글자이상 @입력하세요';
+    }
 
 		return errs;
 	};
 
-  //순서2 - 입력된 값이 val 스테이트에 저장
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setVal({ ...val, [name]: value });
 	};
 
-  //순서3 - 전송버튼 클릭시 해당 함수호출
 	const handleSubmit = (e) => {
 		e.preventDefault();
-    //순서4 - 완성된 state값을 check함수에 인수로 전달
 		setErr(check(val));
-    //순서7- check함수에 의해서 만들어진 에러객체를 err스테이트로 변경
 	};
 
-  //순서8- err 스테이트가 변경될떄마다 콘솔출력
 	useEffect(() => {
 		console.log(err);
 	}, [err]);
@@ -81,7 +77,6 @@ function Join() {
 									/>
 								</td>
 							</tr>
-              {/* 순서1- 비번2개를 입력해서 state값에 전달 */}
 							<tr>
 								<th scope='row'>
 									<label htmlFor='pwd1'>PASSWORD</label>
@@ -109,6 +104,21 @@ function Join() {
 										placeholder='비밀번호를 재입력하세요'
 										value={val.pwd2}
 										onChange={handleChange}
+									/>
+								</td>
+							</tr>
+							<tr>
+								<th scope='row'>
+									<label htmlFor='email'>E-MAIL</label>
+								</th>
+								<td>
+									<input
+										type='text'
+										name='email'
+										id='email'
+										placeholder='이메일 주소를 입력하세요.'
+                    value={val.email}
+                    onChange={handleChange}
 									/>
 								</td>
 							</tr>
