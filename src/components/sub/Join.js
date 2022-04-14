@@ -86,7 +86,7 @@ function Join() {
   }
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+		e.preventDefault();    
 		setErr(check(val));
 	};
 
@@ -108,6 +108,13 @@ function Join() {
       setSuccess(false);
     }
 	}, [err]);
+
+  //success 스테이트값을 의존성 배열로 해서
+  useEffect(()=>{
+    //success값이 true로 변경되면
+    //기존 인풋요소 초기화
+    handleReset();
+  },[success]);
 
 	return (
 		<Layout name={'Join'}>
@@ -274,7 +281,9 @@ function Join() {
 							<tr>
 								<th colSpan='2'>
 									<input type='reset' value='CANCEL' onClick={handleReset} />
-									<input type='submit' value='SEND' onClick={()=>setIsSubmit(true)} />
+									<input type='submit' value='SEND' onClick={()=>{
+                    setIsSubmit(true);                    
+                  }} />
 								</th>
 							</tr>
 						</tbody>
