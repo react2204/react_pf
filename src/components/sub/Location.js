@@ -6,7 +6,6 @@ function Location() {
 	const container = useRef(null);
 	const { kakao } = window;
 
-	//각 지점별 정보값을 배열로 그룹핑
 	const info = [
 		{
 			title: '삼성동 코엑스',
@@ -32,19 +31,19 @@ function Location() {
 	];
 	const [map, setMap] = useState(null);
 	const [traffic, setTraffic] = useState(false);
-	const [mapInfo, setMapInfo] = useState(info);
-	//지점 순번을 관리할 state생성
+	const [mapInfo] = useState(info);	
 	const [index, setIndex] = useState(0);
 
-	useEffect(() => {
-		//위치 정보값을 객체로 받아 화면에 지도표시 인스턴스 생성
+	useEffect(() => {	
+    //기존 지도 안쪽의 컨텐츠를 비워서 초기화
+    container.current.innerHTML='';
+
 		const options = {
 			center: mapInfo[index].latlng,
 			level: 3,
 		};
 		const mapInstance = new kakao.maps.Map(container.current, options);
-
-		//마커 위치, 마커이미지 정보값을 객체로 받아서 마커표시 인스턴스 생성
+	
 		const markerPosition = mapInfo[index].latlng;
 		const imgSrc = mapInfo[index].imgSrc;
 		const imgSize = mapInfo[index].imgSize;
@@ -54,13 +53,26 @@ function Location() {
 			position: markerPosition,
 			image: markerImg,
 		});
-
-		//해당 지도인스턴에스 마커를 세팅
+		
 		marker.setMap(mapInstance);
 
-		//지도 인스턴스를 최종적으로 map 스테이트에 저장
-		setMap(mapInstance);
-	}, [index]); //index 의존성을 추가해서 index 스테이트가 변경될때마다 맵화면 다시 출력
+    //지도 위치 가운데 이동 함수
+    const mapInit = () =>{
+      console.log('지도위치 가운데 변경')
+      mapInstance.setCenter(mapInfo[index].latlng);
+    }
+
+    setMap(mapInstance);
+
+    //브라우저 리사이즈시 mapInit호츨
+    window.addEventListener('resize', mapInit);
+
+    //해당 컴포넌트가 사라질때 전역 window에 등록되어 있는 이벤트 핸들러도 같이 삭제
+    return ()=>{
+      window.removeEventListener('resize', mapInit);
+    }	
+		
+	}, [index]); 
 
 	useEffect(() => {		
 		handleTraffic();
@@ -81,8 +93,7 @@ function Location() {
 				{traffic ? 'Traffic OFF' : 'Traffic On'}
 			</button>
 
-			<ul className='branch'>
-				{/* mapInfo를 통해 동적으로 버튼 생성 */}
+			<ul className='branch'>		
 				{mapInfo.map((info, idx) => {
 					return (
 						<li
