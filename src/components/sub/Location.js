@@ -4,29 +4,38 @@ import Layout from '../common/Layout';
 function Location() {
 	const container = useRef(null);
 	const { kakao } = window;
-	const [map, setMap] = useState(null);
-  //traffic보기 토글 기능을 위한 state추가
+	const [map, setMap] = useState(null);  
   const [traffic, setTraffic] = useState(false);
 
 	useEffect(() => {
 		const options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			center: new kakao.maps.LatLng(37.512742, 127.060810),
 			level: 3,
 		};
 
-		const map = new kakao.maps.Map(container.current, options);
-		setMap(map);
+		const mapInfo = new kakao.maps.Map(container.current, options);
+		setMap(mapInfo);
+
+    //마커 위치 인스턴스 생성
+    const markerPosition  = new kakao.maps.LatLng(37.512742, 127.060810); 
+
+    // 마커를 생성합니다
+    const marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(mapInfo);
 	}, []);
 
-  //traffic값이 변경될때마다 실행되는 useEffect호출
+ 
   useEffect(()=>{
     console.log(traffic);
     handleTraffic();
   }, [traffic]);
 
-  //교통량 표시 함수정의
-  const handleTraffic = () => {
-    //map state값이 있을때에만 동작되게 조건문처리
+  
+  const handleTraffic = () => {   
     console.log(map);    
     if(map){      
       traffic 
@@ -37,11 +46,8 @@ function Location() {
 
 	return (
 		<Layout name={'Location'}>
-			<div id='map' ref={container}></div>
-
-      {/* 해당 버튼을 클릭할때마다 기존 불린값을 반전시켜 토글기능실행 */}
-      <button onClick={()=>setTraffic(!traffic)}>{traffic ? 'Traffic OFF' : 'Traffic On'}</button>      
-			
+			<div id='map' ref={container}></div>     
+      <button onClick={()=>setTraffic(!traffic)}>{traffic ? 'Traffic OFF' : 'Traffic On'}</button>  
 		</Layout>
 	);
 }
