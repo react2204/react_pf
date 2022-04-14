@@ -7,7 +7,8 @@ function Join() {
 		pwd1: '',
 		pwd2: '',
 		email: '',
-    comments: '',
+		comments: '',
+    gender: null,
 	};
 	const [val, setVal] = useState(initVal);
 	const [err, setErr] = useState({});
@@ -36,8 +37,12 @@ function Join() {
 		if (val.email < 5 || !/@/.test(val.email)) {
 			errs.email = '이메일은 5글자이상 @입력하세요';
 		}
-    if(val.comments.length<10){
-      errs.comments = '남기는 말은 10글자 이상 입력하세요';
+		if (val.comments.length < 10) {
+			errs.comments = '남기는 말은 10글자 이상 입력하세요';
+		}
+    //순서4 인증함수 호출해서 해당 항목이 체크되어 있는지 확인후 없으면 에러객체 생성
+    if(!val.gender) {
+      errs.gender = '성별을 선택하세요';
     }
 
 		return errs;
@@ -48,6 +53,15 @@ function Join() {
 		setVal({ ...val, [name]: value });
 	};
 
+  //순서2- 인수로 선택한 요소가 체크되어 있는지의
+  //불린값을 해당 요소의 name값을 키값으로 state추가
+	const handleRadio = (e) => {
+    const {name} = e.target;
+    const isCheck = e.target.checked;
+    setVal({...val, [name]: isCheck})
+  };
+
+  //순서3 - 전송버튼 클릭시 인증시작
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErr(check(val));
@@ -138,6 +152,29 @@ function Join() {
 									<span className='err'>{err.email}</span>
 								</td>
 							</tr>
+							{/* gender */}
+							<tr>
+								<th scope='row'>GENDER</th>
+								<td>
+									<label htmlFor='male'>Male</label>
+									<input
+										type='radio'
+										id='male'
+										name='gender'
+                    //순서1 - 체크시 handleRadio호출
+										onChange={handleRadio}
+									/>
+
+                  <label htmlFor='female'>Female</label>
+									<input
+										type='radio'
+										id='female'
+										name='gender'
+										onChange={handleRadio}
+									/>
+                  <span className="err">{err.gender}</span>
+								</td>
+							</tr>
 							{/* comments */}
 							<tr>
 								<th scope='row'>
@@ -151,7 +188,7 @@ function Join() {
 										rows='10'
 										value={val.comments}
 										onChange={handleChange}></textarea>
-                    <span className="err">{err.comments}</span>
+									<span className='err'>{err.comments}</span>
 								</td>
 							</tr>
 							{/* btnSet */}
