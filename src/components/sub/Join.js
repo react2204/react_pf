@@ -8,7 +8,8 @@ function Join() {
 		pwd2: '',
 		email: '',
 		comments: '',
-    gender: null,
+		gender: null,
+		interest: null,
 	};
 	const [val, setVal] = useState(initVal);
 	const [err, setErr] = useState({});
@@ -40,9 +41,11 @@ function Join() {
 		if (val.comments.length < 10) {
 			errs.comments = '남기는 말은 10글자 이상 입력하세요';
 		}
-    //순서4 인증함수 호출해서 해당 항목이 체크되어 있는지 확인후 없으면 에러객체 생성
-    if(!val.gender) {
-      errs.gender = '성별을 선택하세요';
+		if (!val.gender) {
+			errs.gender = '성별을 선택하세요';
+		}
+    if(!val.interests) {
+      errs.interests = '관심사를 하나이상 선택하세요.';
     }
 
 		return errs;
@@ -53,15 +56,30 @@ function Join() {
 		setVal({ ...val, [name]: value });
 	};
 
-  //순서2- 인수로 선택한 요소가 체크되어 있는지의
-  //불린값을 해당 요소의 name값을 키값으로 state추가
-	const handleRadio = (e) => {
+  //checkbox같은 다중체크요소 state값 저장 함수
+	const handleCheck = (e) => {
+    //지역변수 isCheck값을 false로 설정
+    let isCheck = false;
+    //체크한 인풋요소의 name값을 변수로 저장
     const {name} = e.target;
-    const isCheck = e.target.checked;
-    setVal({...val, [name]: isCheck})
+    //체크한 요소가 복수개 이상일때 유사배열로 저장
+    const inputs = e.target.parentElement.querySelectorAll('input');
+    //해당 유사배열을 반복돌면서
+    inputs.forEach((el)=>{
+      //체크된요소가 하나라도 있으면 isCheck값을 true로 변경
+      if(el.checked) isCheck=true;
+    });
+    //만약 없다면 기존값 false를 그래도 val 스테이트에 저장하고
+    //체크된게 하나라도 있으면 true값 저장
+    setVal({...val, [name]: isCheck});
   };
 
-  //순서3 - 전송버튼 클릭시 인증시작
+	const handleRadio = (e) => {
+		const { name } = e.target;
+		const isCheck = e.target.checked;
+		setVal({ ...val, [name]: isCheck });
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErr(check(val));
@@ -161,18 +179,47 @@ function Join() {
 										type='radio'
 										id='male'
 										name='gender'
-                    //순서1 - 체크시 handleRadio호출
 										onChange={handleRadio}
 									/>
 
-                  <label htmlFor='female'>Female</label>
+									<label htmlFor='female'>Female</label>
 									<input
 										type='radio'
 										id='female'
 										name='gender'
 										onChange={handleRadio}
 									/>
-                  <span className="err">{err.gender}</span>
+									<span className='err'>{err.gender}</span>
+								</td>
+							</tr>
+							{/* interests */}
+							<tr>
+								<th scope='row'>INTERESTS</th>
+								<td>
+									<label htmlFor='sports'>Sports</label>
+									<input
+										type='checkbox'
+										name='interests'
+										id='sports'
+										onChange={handleCheck}
+									/>
+
+                  <label htmlFor='game'>Game</label>
+									<input
+										type='checkbox'
+										name='interests'
+										id='game'
+										onChange={handleCheck}
+									/>
+
+                  <label htmlFor='music'>Music</label>
+									<input
+										type='checkbox'
+										name='interests'
+										id='music'
+										onChange={handleCheck}
+									/>
+                  <span className="err">{err.interests}</span>
 								</td>
 							</tr>
 							{/* comments */}
