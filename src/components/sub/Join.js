@@ -14,6 +14,8 @@ function Join() {
 	};
 	const [val, setVal] = useState(initVal);
 	const [err, setErr] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
 
 	const check = (val) => {
 		const errs = {};
@@ -76,14 +78,10 @@ function Join() {
 		const isCheck = e.target.checked;
 		setVal({ ...val, [name]: isCheck });
 	};
-
-  //셀렉트 선택요소의 value값 val 스테이트 저장함수
-  const handleSelect = (e) =>{
-    //선택한 select요소의 name값 저장
-    const {name} = e.target;
-    //선택한 요소의 자식인 option들 중에서 선택된 순번의 option요소 value값을 저장
+  
+  const handleSelect = (e) =>{   
+    const {name} = e.target;   
     const isSelected = e.target.options[e.target.selectedIndex].value;
-    //위의 name값에 value값을 담아서 val 스테이트에 저장
     setVal({...val, [name]: isSelected});
   }
 
@@ -97,12 +95,23 @@ function Join() {
 		setErr({});
 	};
 
-	useEffect(() => {
-		console.log(err);
+	useEffect(() => {	
+    //객체의 키값을 반환하는 메서드
+    const len = Object.keys(err).length;  
+    
+    if(len===0 && isSubmit ){
+      setSuccess(true);
+      //handleReset();
+      //err값이 의존성으로 등록되어 있는 useEffect안에
+      //다시 err 스테이트를 변경하는 함수나 구문이 있으면 무한루프에 빠지니 주의
+    }else{
+      setSuccess(false);
+    }
 	}, [err]);
 
 	return (
 		<Layout name={'Join'}>
+      {success ? <h2>회원가입을 축하합니다.</h2> : null}
 			<form onSubmit={handleSubmit}>
 				<fieldset>
 					<legend>회원가입 폼 양식</legend>
@@ -265,7 +274,7 @@ function Join() {
 							<tr>
 								<th colSpan='2'>
 									<input type='reset' value='CANCEL' onClick={handleReset} />
-									<input type='submit' value='SEND' />
+									<input type='submit' value='SEND' onClick={()=>setIsSubmit(true)} />
 								</th>
 							</tr>
 						</tbody>
