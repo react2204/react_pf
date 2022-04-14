@@ -8,6 +8,7 @@ function Join() {
 		pwd2: '',
 		email: '',
 		comments: '',
+    edu: '',
 		gender: null,
 		interest: null,
 	};
@@ -47,6 +48,9 @@ function Join() {
     if(!val.interests) {
       errs.interests = '관심사를 하나이상 선택하세요.';
     }
+    if(val.edu===''){
+      errs.edu = '최종 학력을 선택하세요';
+    }
 
 		return errs;
 	};
@@ -56,21 +60,14 @@ function Join() {
 		setVal({ ...val, [name]: value });
 	};
 
-  //checkbox같은 다중체크요소 state값 저장 함수
-	const handleCheck = (e) => {
-    //지역변수 isCheck값을 false로 설정
-    let isCheck = false;
-    //체크한 인풋요소의 name값을 변수로 저장
-    const {name} = e.target;
-    //체크한 요소가 복수개 이상일때 유사배열로 저장
-    const inputs = e.target.parentElement.querySelectorAll('input');
-    //해당 유사배열을 반복돌면서
-    inputs.forEach((el)=>{
-      //체크된요소가 하나라도 있으면 isCheck값을 true로 변경
+	const handleCheck = (e) => { 
+    let isCheck = false;  
+    const {name} = e.target;    
+    const inputs = e.target.parentElement.querySelectorAll('input');    
+    inputs.forEach((el)=>{      
       if(el.checked) isCheck=true;
     });
-    //만약 없다면 기존값 false를 그래도 val 스테이트에 저장하고
-    //체크된게 하나라도 있으면 true값 저장
+    
     setVal({...val, [name]: isCheck});
   };
 
@@ -79,6 +76,16 @@ function Join() {
 		const isCheck = e.target.checked;
 		setVal({ ...val, [name]: isCheck });
 	};
+
+  //셀렉트 선택요소의 value값 val 스테이트 저장함수
+  const handleSelect = (e) =>{
+    //선택한 select요소의 name값 저장
+    const {name} = e.target;
+    //선택한 요소의 자식인 option들 중에서 선택된 순번의 option요소 value값을 저장
+    const isSelected = e.target.options[e.target.selectedIndex].value;
+    //위의 name값에 value값을 담아서 val 스테이트에 저장
+    setVal({...val, [name]: isSelected});
+  }
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -170,6 +177,22 @@ function Join() {
 									<span className='err'>{err.email}</span>
 								</td>
 							</tr>
+              {/* eduction */}
+              <tr>
+                <th scope='row'>
+                  <label htmlFor="edu">EDUCATION</label>
+                </th>
+                <td>
+                  <select name="edu" id="edu" onChange={handleSelect}>
+                    <option value="">학력을 선택하세요</option>
+                    <option value="elementary-school">초등학교 졸업</option>
+                    <option value="middle-school">중학교 졸업</option>
+                    <option value="high-school">고등학교 졸업</option>
+                    <option value="collegs">대학교 졸업</option>
+                  </select>
+                  <span className="err">{err.edu}</span>
+                </td>
+              </tr>
 							{/* gender */}
 							<tr>
 								<th scope='row'>GENDER</th>
