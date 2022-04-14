@@ -5,6 +5,7 @@ function Location() {
   const path = process.env.PUBLIC_URL;
 	const container = useRef(null);
 	const { kakao } = window;
+
   //각 지점별 정보값을 배열로 그룹핑
   const info = [
     {
@@ -35,28 +36,30 @@ function Location() {
   const [mapInfo, setMapInfo] = useState(info);
 
 	useEffect(() => {
+
+    //위치 정보값을 객체로 받아 화면에 지도표시 인스턴스 생성
 		const options = {
-			center: mapInfo[0].latlng,
+			center: mapInfo[2].latlng,
 			level: 3,
 		};
-
-		const mapInstance = new kakao.maps.Map(container.current, options);
-		setMap(mapInstance);
+		const mapInstance = new kakao.maps.Map(container.current, options);		
     
-    const markerPosition  = mapInfo[0].latlng; 
-
-    //마커 이미지 정보 추가
-    const imgSrc = mapInfo[0].imgSrc;
-    const imgSize = mapInfo[0].imgSize;
-    const imgPos = mapInfo[0].imgPos;
-    const markerImg = new kakao.maps.MarkerImage(imgSrc, imgSize, imgPos);
-
+    //마커 위치, 마커이미지 정보값을 객체로 받아서 마커표시 인스턴스 생성
+    const markerPosition  = mapInfo[2].latlng;     
+    const imgSrc = mapInfo[2].imgSrc;
+    const imgSize = mapInfo[2].imgSize;
+    const imgPos = mapInfo[2].imgPos;
+    const markerImg = new kakao.maps.MarkerImage(imgSrc, imgSize, imgPos);    
     const marker = new kakao.maps.Marker({
       position: markerPosition,
       image: markerImg
     });
 
+    //해당 지도인스턴에스 마커를 세팅
     marker.setMap(mapInstance);
+
+    //지도 인스턴스를 최종적으로 map 스테이트에 저장
+    setMap(mapInstance);
 	}, []);
 
 
@@ -66,8 +69,7 @@ function Location() {
   }, [traffic]);
 
   
-  const handleTraffic = () => {   
-    console.log(map);    
+  const handleTraffic = () => {          
     if(map){      
       traffic 
         ? map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
