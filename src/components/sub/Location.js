@@ -59,7 +59,7 @@ function Location() {
 
     const mapTypeControl = new kakao.maps.MapTypeControl();   
     mapInstance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
-   
+
     const zoomControl = new kakao.maps.ZoomControl();
     mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
 

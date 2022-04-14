@@ -36,6 +36,11 @@ function Header(props) {
 							Location
 						</NavLink>
 					</li>
+					<li>
+						<NavLink to='/join' activeStyle={active}>
+							Join
+						</NavLink>
+					</li>
 				</ul>
 
 				<FontAwesomeIcon icon={faBars} />
