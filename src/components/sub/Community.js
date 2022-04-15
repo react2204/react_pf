@@ -10,7 +10,20 @@ function Community() {
   //localStorage의 데이터를 반환하는 함수
   const getLocalData = () => {
     const data = localStorage.getItem('posts');
-    return JSON.parse(data);
+
+		const dummyData = [
+			{title: 'Hello5', content: 'Here comes description in detail.'},
+			{title: 'Hello4', content: 'Here comes description in detail.'},
+			{title: 'Hello3', content: 'Here comes description in detail.'},
+			{title: 'Hello2', content: 'Here comes description in detail.'},
+			{title: 'Hello1', content: 'Here comes description in detail.'},
+		]
+
+		if(data){
+			return JSON.parse(data);
+		}else{
+			return dummyData;
+		}    
   }
 
   //getLocalData로 반환된 값을 posts 스테이트에 저장
