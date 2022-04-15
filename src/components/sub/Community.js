@@ -24,10 +24,12 @@ function Community() {
 
 	//post추가 함수
 	const createPost = () => {
+    //입력된 내용에서 혹시라도 빈칸이 있는 내용을 trim으로 제거해서 전달
     const inputVal = input.current.value.trim();
     const textareaVal = textarea.current.value.trim();
 
-    if( !inputVal || !textareaVal || inputVal==='' || textareaVal==='' ) {
+    //전달된 값이 아예 없거나 빈칸만 있을떄에는 경고창 출력후 종료
+    if( !inputVal || !textareaVal) {
       alert('제목과 본문을 모두 입력하세요!!');      
       return;
     }
@@ -49,7 +51,7 @@ function Community() {
     const inputVal = editInput.current.value.trim();
     const textareaVal = editTextarea.current.value.trim();
 
-    if( !inputVal || !textareaVal || inputVal==='' || textareaVal==='' ) {
+    if( !inputVal || !textareaVal) {
       alert('제목과 본문을 모두 입력하세요!!');      
       return;
     }
