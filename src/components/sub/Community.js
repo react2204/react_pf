@@ -38,9 +38,8 @@ function Community() {
 
   //글수정모드 변경함수
   const enableUpdate = (index) =>{
-    setPosts(
-      //현재 반복도는 state순서값과 인수로 받은 수정할 포스트의 순서값이 동일하면 해당 post객체에는 enableUpdate: true라는 키,값을 추가해서 기존 posts 스테이트값 변경
-      posts.map((post, idx)=>{
+    setPosts(      
+      posts.map((post, idx)=>{       
         if(idx === index) post.enableUpdate=true;
         return post;
       })
@@ -73,14 +72,32 @@ function Community() {
 				{posts.map((post, idx) => {
 					return (
 						<article key={idx}>
-							<h2>{post.title}</h2>
-							<p>{post.content}</p>
-
-              <div className="btns">  
-                {/* 수정버튼 클릭시 해당 포스트의 순서값을 enableUpdate함수로 전달 */}
-                <button onClick={()=>enableUpdate(idx)}>edit</button>          
-                <button onClick={()=>deletePost(idx)}>delete</button>
-              </div>
+              {                
+                post.enableUpdate
+                ?
+                // 반복도는 해당 state에 enabelUpdate값이 true면 수정화면 렌더링
+                <>
+                  <input type="text" defaultValue={post.title} /><br />
+                  <textarea defaultValue={post.content}></textarea>
+                  
+                  <div className="btns"> 
+                      <button onClick={()=>enableUpdate(idx)}>edit</button>          
+                      <button onClick={()=>deletePost(idx)}>delete</button>
+                  </div>
+                </>
+                :
+                // 반복도는 해당 state에 enabelUpdate값이 false먄 출력화면 렌더링
+                <>
+                  <h2>{post.title}</h2>
+                  <p>{post.content}</p>
+                  
+                  <div className="btns"> 
+                    <button onClick={()=>enableUpdate(idx)}>edit</button>          
+                    <button onClick={()=>deletePost(idx)}>delete</button>
+                  </div>
+                </>
+              }
+							
 						</article>
 					);
 				})}
