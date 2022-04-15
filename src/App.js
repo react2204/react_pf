@@ -15,6 +15,7 @@ import Gallery from './components/sub/Gallery';
 import Member from './components/sub/Member';
 import Location from './components/sub/Location';
 import Join from './components/sub/Join';
+import Community from './components/sub/Community';
 
 
 const path = process.env.PUBLIC_URL;
@@ -39,7 +40,8 @@ function App() {
 			<Route path='/member' component={Member} />
 			<Route path='/location' component={Location} />
 			<Route path='/join' component={Join} />
-
+			<Route path='/community' component={Community} />
+			
 			<Footer />
 		</>
 	);
