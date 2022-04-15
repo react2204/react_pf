@@ -46,6 +46,16 @@ function Community() {
     )
   }
 
+  //글출력모드 변경함수
+  const disableUpdate = (index)=>{
+    setPosts(      
+      posts.map((post, idx)=>{       
+        if(idx === index) post.enableUpdate=false;
+        return post;
+      })
+    )
+  }
+
   //posts의 상태값이 변경될때마다 콘솔문 출력
   useEffect(()=>{
     console.log(posts);
@@ -75,18 +85,18 @@ function Community() {
               {                
                 post.enableUpdate
                 ?
-                // 반복도는 해당 state에 enabelUpdate값이 true면 수정화면 렌더링
+                // 수정모드
                 <>
                   <input type="text" defaultValue={post.title} /><br />
                   <textarea defaultValue={post.content}></textarea>
                   
                   <div className="btns"> 
-                      <button onClick={()=>enableUpdate(idx)}>edit</button>          
-                      <button onClick={()=>deletePost(idx)}>delete</button>
+                      <button onClick={()=>disableUpdate(idx)}>cancel</button>          
+                      <button>save</button>
                   </div>
                 </>
                 :
-                // 반복도는 해당 state에 enabelUpdate값이 false먄 출력화면 렌더링
+                // 출력모드
                 <>
                   <h2>{post.title}</h2>
                   <p>{post.content}</p>
