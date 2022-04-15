@@ -109,6 +109,9 @@ function Community() {
 
 			<div className='showBox'>			
 				{posts.map((post, idx) => {
+					//본문에서 줄바꿈되는 부분인 이스케이프 문자를 기준점으로 해서 배열로 분리
+					let con = post.content.split('\n');	
+									
 					return (
 						<article key={idx}>
 							{post.enableUpdate ? (
@@ -133,7 +136,17 @@ function Community() {
 								// 출력모드
 								<>
 									<h2>{post.title}</h2>
-									<p>{post.content}</p>
+									<div>
+										{/* 분리된 문자열 배열을 반복처리하면서 br태그 연결해서 줄바꿈출력 */}
+										{con.map((txt,idx)=>{
+											return (
+												<p key={idx}>												
+													{txt}
+													<br />
+												</p>
+											)
+										})}
+									</div>
 
 									<div className='btns'>
 										<button onClick={() => enableUpdate(idx)}>edit</button>

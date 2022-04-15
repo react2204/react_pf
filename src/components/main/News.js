@@ -6,7 +6,7 @@ function News() {
     const data = localStorage.getItem('posts');
 
 		const dummyData = [
-			{title: 'Hello5', content: `Here comes description in detail.`},
+			{title: 'Hello5', content: 'Here comes description in detail.'},
 			{title: 'Hello4', content: 'Here comes description in detail.'},
 			{title: 'Hello3', content: 'Here comes description in detail.'},
 			{title: 'Hello2', content: 'Here comes description in detail.'},
@@ -35,11 +35,22 @@ function News() {
 			<ul>
 				
 				{posts.map((post,idx)=>{
+					let con = post.content.split('\n');	
 					if(idx<3){
 						return (
 							<li key={idx}>
 								<h2>{post.title}</h2>
-								<p>{post.content}</p>
+								<div>
+									{/* 분리된 문자열 배열을 반복처리하면서 br태그 연결해서 줄바꿈출력 */}
+									{con.map((txt,idx)=>{
+										return (
+											<p key={idx}>												
+												{txt}
+												<br />
+											</p>
+										)
+									})}
+								</div>
 							</li>
 						)
 					}					
