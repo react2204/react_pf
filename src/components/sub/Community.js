@@ -9,6 +9,7 @@ function Community() {
 
   //localStorage의 데이터를 반환하는 함수
   const getLocalData = () => {
+		//순서 1- 로컬저장소에 데이터 불러옴
     const data = localStorage.getItem('posts');
 
 		const dummyData = [
@@ -19,6 +20,7 @@ function Community() {
 			{title: 'Hello1', content: 'Here comes description in detail.'},
 		]
 
+		//순서2 - 데이터가 있으면 해당 데이터를 반환
 		if(data){
 			return JSON.parse(data);
 		}else{
@@ -27,6 +29,7 @@ function Community() {
   }
 
   //getLocalData로 반환된 값을 posts 스테이트에 저장
+	//순서3 - 로컬저장소의 데이터를 posts에 저장
 	const [posts, setPosts] = useState(getLocalData);  
 
 	//post입력창 초기화함수
@@ -102,13 +105,6 @@ function Community() {
 	useEffect(() => {
 		console.log('posts state변경됨');   
     localStorage.setItem('posts', JSON.stringify(posts));
-
-    /*
-    로컬스토리지에 있는 데이터를 가져와서 다시 객체형태로 변환
-    let data = localStorage.getItem('posts');
-    JSON.parse(data);
-    */
-
 	}, [posts]);
 
 	return (
