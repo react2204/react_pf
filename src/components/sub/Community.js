@@ -24,8 +24,16 @@ function Community() {
 
 	//post추가 함수
 	const createPost = () => {
+    const inputVal = input.current.value.trim();
+    const textareaVal = textarea.current.value.trim();
+
+    if( !inputVal || !textareaVal || inputVal==='' || textareaVal==='' ) {
+      alert('제목과 본문을 모두 입력하세요!!');      
+      return;
+    }
+
 		setPosts([
-			{ title: input.current.value, content: textarea.current.value },
+			{ title: inputVal, content: textareaVal },
 			...posts,
 		]);
 		resetPost();
@@ -38,18 +46,20 @@ function Community() {
 
 	//post수정 함수
 	const updatePost = (index) => {
-    setPosts(
-      //기존 state값을 반복을 돌면서
-      posts.map((post, idx)=>{
-        //반복도는 순번과 인수로 전달받은 저장할 순번이 같으면
-        if(idx === index){
-          //useRef로 참조한 수정 input,textarea의 값을 가지고와서 해당 포스트에 저장
+    const inputVal = editInput.current.value.trim();
+    const textareaVal = editTextarea.current.value.trim();
+
+    if( !inputVal || !textareaVal || inputVal==='' || textareaVal==='' ) {
+      alert('제목과 본문을 모두 입력하세요!!');      
+      return;
+    }
+    setPosts(     
+      posts.map((post, idx)=>{        
+        if(idx === index){         
           post.title = editInput.current.value;
-          post.content = editTextarea.current.value;
-          //해당 포스트의 enableUpdate값을 false로 변경해서 다시 출력모드로 변경
+          post.content = editTextarea.current.value;        
           post.enableUpdate = false;
-        }
-        //이렇게 변경된 post를 반환해서 전체 posts state 변경
+        }       
         return post;
       })
     )
@@ -113,8 +123,7 @@ function Community() {
 										ref={editTextarea}></textarea>
 
 									<div className='btns'>
-										<button onClick={() => disableUpdate(idx)}>cancel</button>
-                    {/* 수정모드에 저장버튼 클릭시 해당 순서값을 updatePost에 전달해서 호출 */}
+										<button onClick={() => disableUpdate(idx)}>cancel</button>                   
 										<button onClick={() => updatePost(idx)}>save</button>
 									</div>
 								</>
