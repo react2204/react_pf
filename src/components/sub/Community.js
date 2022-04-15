@@ -11,6 +11,22 @@ function Community() {
 	];
 	const [posts, setPosts] = useState(dummyPosts);
 
+  //post추가 함수 
+  const createPost=()=>{
+    setPosts([
+      { title: input.current.value, content: textarea.current.value },
+      ...posts,
+    ]);
+    //글 저장후 input창 초기화
+    resetPost();
+  }
+
+  //post입력창 초기화함수
+  const resetPost=()=>{
+    input.current.value='';
+    textarea.current.value='';
+  }
+
 	return (
 		<Layout name={'Community'}>
 			<div className='inputBox'>
@@ -22,10 +38,8 @@ function Community() {
 					placeholder='본문을 입력하세요.'
 					ref={textarea}></textarea>
 
-				<button>cancel</button>
-				<button onClick={()=>{
-          setPosts([{title: input.current.value, content: textarea.current.value }, ...posts])
-        }}>create</button>
+				<button onClick={resetPost}>cancel</button>
+				<button onClick={createPost}>create</button>
 			</div>
 
 			<div className='showBox'>
