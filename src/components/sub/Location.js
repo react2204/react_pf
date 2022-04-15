@@ -5,7 +5,7 @@ function Location() {
 	const path = process.env.PUBLIC_URL;
 	const container = useRef(null);
 	const { kakao } = window;
-
+	const branch = useRef(null);
 	const info = [
 		{
 			title: '삼성동 코엑스',
@@ -71,13 +71,20 @@ function Location() {
 
     setMap(mapInstance);
 
+		//index 값이 변경될때마다 참조된 branch의 모든 li를 비활성화 시키고
+		const lis = branch.current.querySelectorAll('li');
+		for(const li of lis) li.classList.remove('on');
+		//현재 index순번의 버튼만 활성화
+		lis[index].classList.add('on');		
+	
+
     //브라우저 리사이즈시 mapInit호츨
     window.addEventListener('resize', mapInit);
 
     //해당 컴포넌트가 사라질때 전역 window에 등록되어 있는 이벤트 핸들러도 같이 삭제
     return ()=>{
       window.removeEventListener('resize', mapInit);
-    }	
+    }			
 		
 	}, [index]); 
 
@@ -100,14 +107,12 @@ function Location() {
 				{traffic ? 'Traffic OFF' : 'Traffic On'}
 			</button>
 
-			<ul className='branch'>		
+			<ul className='branch' ref={branch}>		
 				{mapInfo.map((info, idx) => {
 					return (
 						<li
 							key={idx}
-							onClick={() => {
-								setIndex(idx);                
-							}}>
+							onClick={() => setIndex(idx)}>
 							{info.title}
 						</li>
 					);

@@ -9,8 +9,7 @@ function Community() {
 
   //localStorage의 데이터를 반환하는 함수
   const getLocalData = () => {
-    let data = localStorage.getItem('posts');
-		//로컬 스토리지의 데이터를 객체형식으로 다시 parsing
+    let data = localStorage.getItem('posts');	
 		data = JSON.parse(data);
 		return data;
   }

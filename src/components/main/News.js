@@ -6,7 +6,7 @@ function News() {
     const data = localStorage.getItem('posts');
 
 		const dummyData = [
-			{title: 'Hello5', content: 'Here comes description in detail.'},
+			{title: 'Hello5', content: `Here comes description in detail.`},
 			{title: 'Hello4', content: 'Here comes description in detail.'},
 			{title: 'Hello3', content: 'Here comes description in detail.'},
 			{title: 'Hello2', content: 'Here comes description in detail.'},
