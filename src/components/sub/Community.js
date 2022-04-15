@@ -23,12 +23,10 @@ function Community() {
 	};
 
 	//post추가 함수
-	const createPost = () => {
-    //입력된 내용에서 혹시라도 빈칸이 있는 내용을 trim으로 제거해서 전달
+	const createPost = () => { 
     const inputVal = input.current.value.trim();
     const textareaVal = textarea.current.value.trim();
 
-    //전달된 값이 아예 없거나 빈칸만 있을떄에는 경고창 출력후 종료
     if( !inputVal || !textareaVal) {
       alert('제목과 본문을 모두 입력하세요!!');      
       return;
@@ -89,7 +87,9 @@ function Community() {
 
 	//posts의 상태값이 변경될때마다 콘솔문 출력
 	useEffect(() => {
-		console.log(posts);
+		console.log('posts state변경됨');
+    //localStorage에 'posts'란 이름으로 기존 객체 데이터를 문자로 변경해서 저장
+    localStorage.setItem('posts', JSON.stringify(posts));
 	}, [posts]);
 
 	return (
@@ -101,7 +101,7 @@ function Community() {
 					cols='30'
 					rows='10'
 					placeholder='본문을 입력하세요.'
-					ref={textarea}></textarea>
+					ref={textarea}></textarea><br />
 
 				<button onClick={resetPost}>cancel</button>
 				<button onClick={createPost}>create</button>
