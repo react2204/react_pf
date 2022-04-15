@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React,{useState, useEffect} from 'react';
 
 function News() {
 	//메인페이지에서 로컬스토리지에 접근해서 데이터 반환
@@ -40,17 +40,17 @@ function News() {
 						return (
 							<li key={idx}>
 								<h2>{post.title}</h2>
-								<div>
+								<p>
 									{/* 분리된 문자열 배열을 반복처리하면서 br태그 연결해서 줄바꿈출력 */}
 									{con.map((txt,idx)=>{
 										return (
-											<p key={idx}>												
+											<React.Fragment key={idx}>												
 												{txt}
 												<br />
-											</p>
+											</React.Fragment>
 										)
 									})}
-								</div>
+								</p>
 							</li>
 						)
 					}					
