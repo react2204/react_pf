@@ -9,27 +9,10 @@ function Community() {
 
   //localStorage의 데이터를 반환하는 함수
   const getLocalData = () => {
-		//순서 1- 로컬저장소에 데이터 불러옴
     const data = localStorage.getItem('posts');
-
-		const dummyData = [
-			{title: 'Hello5', content: 'Here comes description in detail.'},
-			{title: 'Hello4', content: 'Here comes description in detail.'},
-			{title: 'Hello3', content: 'Here comes description in detail.'},
-			{title: 'Hello2', content: 'Here comes description in detail.'},
-			{title: 'Hello1', content: 'Here comes description in detail.'},
-		]
-
-		//순서2 - 데이터가 있으면 해당 데이터를 반환
-		if(data){
-			return JSON.parse(data);
-		}else{
-			return dummyData;
-		}    
+		return data;
   }
 
-  //getLocalData로 반환된 값을 posts 스테이트에 저장
-	//순서3 - 로컬저장소의 데이터를 posts에 저장
 	const [posts, setPosts] = useState(getLocalData);  
 
 	//post입력창 초기화함수
@@ -122,7 +105,7 @@ function Community() {
 				<button onClick={createPost}>create</button>
 			</div>
 
-			<div className='showBox'>
+			<div className='showBox'>			
 				{posts.map((post, idx) => {
 					return (
 						<article key={idx}>
