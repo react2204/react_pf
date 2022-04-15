@@ -30,13 +30,27 @@ function Community() {
 	};
 
   //post삭제 함수
-  const deletePost = (index) => {
-    console.log('삭제할 포스트 순번', index);
-
+  const deletePost = (index) => {  
     setPosts(
-      posts.filter((post, idx)=> idx !== index)
+      posts.filter((_, idx)=> idx !== index)
     )
   }
+
+  //글수정모드 변경함수
+  const enableUpdate = (index) =>{
+    setPosts(
+      //현재 반복도는 state순서값과 인수로 받은 수정할 포스트의 순서값이 동일하면 해당 post객체에는 enableUpdate: true라는 키,값을 추가해서 기존 posts 스테이트값 변경
+      posts.map((post, idx)=>{
+        if(idx === index) post.enableUpdate=true;
+        return post;
+      })
+    )
+  }
+
+  //posts의 상태값이 변경될때마다 콘솔문 출력
+  useEffect(()=>{
+    console.log(posts);
+  },[posts]);
 
 	
 
@@ -62,8 +76,9 @@ function Community() {
 							<h2>{post.title}</h2>
 							<p>{post.content}</p>
 
-              <div className="btns">
-                {/* 순서1- 삭제버튼 클릭시 삭제포스트의 순서값 전달 */}
+              <div className="btns">  
+                {/* 수정버튼 클릭시 해당 포스트의 순서값을 enableUpdate함수로 전달 */}
+                <button onClick={()=>enableUpdate(idx)}>edit</button>          
                 <button onClick={()=>deletePost(idx)}>delete</button>
               </div>
 						</article>
