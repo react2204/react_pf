@@ -33,7 +33,7 @@ function News() {
 			<h1>Recent News</h1>
 
 			<ul>
-				{/* posts값중에서 최근글 3개까지만 화면에 출력 */}
+				
 				{posts.map((post,idx)=>{
 					if(idx<3){
 						return (
@@ -43,7 +43,7 @@ function News() {
 							</li>
 						)
 					}					
-				})}
+				})}				
 			</ul>
 		</main>
 	);

@@ -9,7 +9,9 @@ function Community() {
 
   //localStorage의 데이터를 반환하는 함수
   const getLocalData = () => {
-    const data = localStorage.getItem('posts');
+    let data = localStorage.getItem('posts');
+		//로컬 스토리지의 데이터를 객체형식으로 다시 parsing
+		data = JSON.parse(data);
 		return data;
   }
 
@@ -90,8 +92,9 @@ function Community() {
     localStorage.setItem('posts', JSON.stringify(posts));
 	}, [posts]);
 
+	
 	return (
-		<Layout name={'Community'}>
+		<Layout name={'Community'}>			
 			<div className='inputBox'>
 				<input type='text' placeholder='제목을 입력하세요' ref={input} />
 				<br />
@@ -142,9 +145,10 @@ function Community() {
 						</article>
 					);
 				})}
-			</div>
+			</div>		
 		</Layout>
 	);
+	
 }
 
 export default Community;
