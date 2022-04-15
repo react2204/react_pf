@@ -5,16 +5,16 @@ function Community() {
 	const input = useRef(null);
 	const textarea = useRef(null);
 	const editInput = useRef(null);
-	const editTextarea = useRef(null);
+	const editTextarea = useRef(null);  
 
-	const dummyPosts = [
-		{ title: 'Hello5', content: 'Here comes description in detail.' },
-		{ title: 'Hello4', content: 'Here comes description in detail.' },
-		{ title: 'Hello3', content: 'Here comes description in detail.' },
-		{ title: 'Hello2', content: 'Here comes description in detail.' },
-		{ title: 'Hello1', content: 'Here comes description in detail.' },
-	];
-	const [posts, setPosts] = useState(dummyPosts);
+  //localStorage의 데이터를 반환하는 함수
+  const getLocalData = () => {
+    const data = localStorage.getItem('posts');
+    return JSON.parse(data);
+  }
+
+  //getLocalData로 반환된 값을 posts 스테이트에 저장
+	const [posts, setPosts] = useState(getLocalData);  
 
 	//post입력창 초기화함수
 	const resetPost = () => {
@@ -87,9 +87,15 @@ function Community() {
 
 	//posts의 상태값이 변경될때마다 콘솔문 출력
 	useEffect(() => {
-		console.log('posts state변경됨');
-    //localStorage에 'posts'란 이름으로 기존 객체 데이터를 문자로 변경해서 저장
+		console.log('posts state변경됨');   
     localStorage.setItem('posts', JSON.stringify(posts));
+
+    /*
+    로컬스토리지에 있는 데이터를 가져와서 다시 객체형태로 변환
+    let data = localStorage.getItem('posts');
+    JSON.parse(data);
+    */
+
 	}, [posts]);
 
 	return (
