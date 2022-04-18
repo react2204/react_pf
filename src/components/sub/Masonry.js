@@ -19,7 +19,20 @@ function Masonry() {
 
   return (
     <Layout name={'Masonry'}>
-      갤러리 메이슨리 플러그인 적용버전
+      <div className="frame on">
+        {items.map((item,idx)=>{
+          return (
+            <article key={idx}>
+              <div className="inner">
+                <div className="pic">
+                  <img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`} />
+                </div>
+                <h2>{item.title}</h2>
+              </div>
+            </article>
+          )
+        })}
+      </div>
     </Layout>
   )
 }
