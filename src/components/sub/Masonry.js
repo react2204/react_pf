@@ -1,18 +1,25 @@
 import Layout from '../common/Layout.js';
 import {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
+import Maconry from 'react-masonry-component';
 
 function Masonry() {
   const key = '89aae050d1d8c006bdb5bf866029199d';
 	const method1 = 'flickr.interestingness.getList';
   const method2 = 'flickr.photos.search';
-	const num = 20;
+	const num = 500;
 	const url1 = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
   const url2 = `https://www.flickr.com/services/rest/?method=${method2}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=ocean`;
+
+  //masonry옵션값 설정
+  const masonryOptions = { 
+    //움직일때의 모션속도
+    transitionDuration: '0.5s'
+  };
+
   const frame = useRef(null);
   const [items, setItems] = useState([]);  
 
-  //getFlickr함수에 원하는 주소값을 전달할수 있도록 name 이라는 매개변수 추가
   const getFlickr = async (name) =>{  
     await axios.get(name).then((json)=>{
       console.log(json.data.photos.photo);
@@ -22,30 +29,28 @@ function Masonry() {
   }
 
   useEffect(()=>{
-    //처음 로딩시 name매개변수에 url1이라는 주소값을 넣어서 데이터 호출
-    //처음 로딩시 interestingness의 데이터 출력
     getFlickr(url1);
   },[]);
 
   return (
-    <Layout name={'Masonry'}>
-      {/* interestingness데이터 보여주는 버튼 이벤트 */}
-      <button onClick={()=>{
-        //기존 갤러리를 아래로 내리면서 사라지는 모션처리
+    <Layout name={'Masonry'}>  
+      <button onClick={()=>{   
         frame.current.classList.remove('on');
-        //url1을 인수로 집어넣어서 interest갤러리를 화면에 호출
         getFlickr(url1);
       }}>interest 갤러리 보기</button>
 
-      {/* ocean키워드의 데이터 보여주는 버튼 이벤트 */}
-      <button onClick={()=>{
-        //기존 갤러리를 아래로 내리면서 사라지는 모션처리
-        frame.current.classList.remove('on');
-        //url2를 인수로 집어넣어서 ocean키워드의 갤러리를 화면에 호출
+
+      <button onClick={()=>{ 
+        frame.current.classList.remove('on');  
         getFlickr(url2);
       }}>ocean 갤러리 보기</button>
 
       <div className="frame" ref={frame}> 
+        {/* 움직일 자식 컴포넌트를 감싸주고 옵션설정 */}
+        <Maconry
+          elementType={'div'}//wrapping 태그명 지정
+          options={masonryOptions} //위에서 설정한 옵션값 적용
+        >
         {items.map((item,idx)=>{
           return (
             <article key={idx}>
@@ -58,6 +63,7 @@ function Masonry() {
             </article>
           )
         })}
+        </Maconry>
       </div>
     </Layout>
   )
