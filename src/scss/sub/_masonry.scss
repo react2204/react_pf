@@ -1,7 +1,12 @@
 .Masonry {
-  >.inner {
+  .loading {
+    position: fixed; top: 0px; left: 50%;
+    transform: translateX(-50%); z-index: -1;
+  }
+  >.inner {    
     .frame {
       transform: translateY(200px); opacity: 0; transition: 1s;
+      position: relative; z-index: 2;
 
       &.on {
         transform: translateY(0px); opacity: 1;
