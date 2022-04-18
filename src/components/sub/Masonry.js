@@ -12,8 +12,9 @@ function Masonry() {
   const frame = useRef(null);
   const [items, setItems] = useState([]);  
 
-  const getFlickr = async (url) =>{  
-    await axios.get(url).then((json)=>{
+  //getFlickr함수에 원하는 주소값을 전달할수 있도록 name 이라는 매개변수 추가
+  const getFlickr = async (name) =>{  
+    await axios.get(name).then((json)=>{
       console.log(json.data.photos.photo);
       setItems(json.data.photos.photo);
     }); 
@@ -21,18 +22,26 @@ function Masonry() {
   }
 
   useEffect(()=>{
+    //처음 로딩시 name매개변수에 url1이라는 주소값을 넣어서 데이터 호출
+    //처음 로딩시 interestingness의 데이터 출력
     getFlickr(url1);
   },[]);
 
   return (
     <Layout name={'Masonry'}>
+      {/* interestingness데이터 보여주는 버튼 이벤트 */}
       <button onClick={()=>{
+        //기존 갤러리를 아래로 내리면서 사라지는 모션처리
         frame.current.classList.remove('on');
+        //url1을 인수로 집어넣어서 interest갤러리를 화면에 호출
         getFlickr(url1);
       }}>interest 갤러리 보기</button>
-      
+
+      {/* ocean키워드의 데이터 보여주는 버튼 이벤트 */}
       <button onClick={()=>{
+        //기존 갤러리를 아래로 내리면서 사라지는 모션처리
         frame.current.classList.remove('on');
+        //url2를 인수로 집어넣어서 ocean키워드의 갤러리를 화면에 호출
         getFlickr(url2);
       }}>ocean 갤러리 보기</button>
 
