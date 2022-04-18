@@ -10,6 +10,8 @@ function Masonry() {
   };
 
   const frame = useRef(null);
+  //검색창을 참조할 객체 생성
+  const input = useRef(null);
   const [items, setItems] = useState([]);    
   const [loading, setLoading] = useState(true);
   const [enableClick, setEnableClick] = useState(true)
@@ -21,17 +23,15 @@ function Masonry() {
     const method2 = 'flickr.photos.search';
     const num = opt.count;
     let url = '';
-
-    //인수로 받은 객체의 type값이 interest이면 interest이미지 데이터를 불러오는 url을 반환
+ 
     if(opt.type==='interest'){
       url = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
     }
-    //인수로 받은 객체의 type값이 search면 tags를 받아서 해당 검색어의 데이터를 불러오는 url을 반환
+ 
     if(opt.type==='search'){
       url = `https://www.flickr.com/services/rest/?method=${method2}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
     }  
-
-    //위에서 반환된 url을 가지고 데이터 요청
+ 
     await axios.get(url).then((json)=>{    
       setItems(json.data.photos.photo);
     });  
@@ -47,8 +47,7 @@ function Masonry() {
           
   }
 
-  useEffect(()=>{
-    //처음 로딩시에는 interest 이미지 호출
+  useEffect(()=>{   
     getFlickr({
       type:'interest',
       count: 500
@@ -59,36 +58,42 @@ function Masonry() {
     <Layout name={'Masonry'}>        
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
+      <div className="searchBox">
+        {/* 검색창 참조 */}
+        <input type="text" ref={input} />
+
+        {/* 검색버튼 클릭시 input요소에 입력한 값을 getFlickr에 인수로 전달해 검색 요청 */}
+        <button onClick={()=>{
+          const result = input.current.value;
+          
+          if(enableClick){
+            setEnableClick(false);
+            setLoading(true);
+            frame.current.classList.remove('on');
+
+            getFlickr({
+              type:'search',
+              count: 1000,
+              tags: result
+            })
+          }
+        }}>search</button>
+      </div>
+
       <button onClick={()=>{      
         if(enableClick){        
           setEnableClick(false);
           setLoading(true);
-          frame.current.classList.remove('on');   
-
-          //interest방식으로 데이터 호출 
+          frame.current.classList.remove('on'); 
+          
           getFlickr({
             type:'interest',
             count: 500
           });
         }  
         
-      }}>interest 갤러리 보기</button>
+      }}>interest 갤러리 보기</button>   
 
-
-      <button onClick={()=>{ 
-        if(enableClick){
-          setEnableClick(false);
-          setLoading(true);
-          frame.current.classList.remove('on');  
-
-          //search방식으로 검색키워드 넣어서 데이터 호출
-          getFlickr({
-            type: 'search',
-            count: 100,
-            tags: 'spring'
-          })
-        }        
-      }}>검색 갤러리 보기</button>
 
       <div className="frame" ref={frame}>       
         <Maconry
