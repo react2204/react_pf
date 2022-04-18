@@ -81,10 +81,12 @@ function Masonry() {
   },[]);
   
   return (
-    <Layout name={'Masonry'}>        
+   //Masonry에만 특정 텍스트를 집어넣을때 커스텀 prop값을 전달
+    <Layout name={'Masonry'} subText={'Custom Gallery'}>        
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
-      <div className="searchBox">        
+      <div className="searchBox">    
+       
         <input type="text" ref={input} onKeyUp={(e)=>{
           if(e.key === 'Enter') showSearch();       
         }} />       
