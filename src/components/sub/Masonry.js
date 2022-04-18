@@ -5,17 +5,6 @@ import Maconry from 'react-masonry-component';
 
 function Masonry() {
   const path = process.env.PUBLIC_URL;
-  const getURL = ()=>{
-    const key = '89aae050d1d8c006bdb5bf866029199d';
-    const method1 = 'flickr.interestingness.getList';
-    const method2 = 'flickr.photos.search';
-    const num = 500;
-    const url1 = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
-    const url2 = `https://www.flickr.com/services/rest/?method=${method2}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=ocean`;
-    return [url1, url2];
-  }
-  const [url1, url2] = getURL();
-
   const masonryOptions = {    
     transitionDuration: '0.5s'
   };
@@ -23,12 +12,27 @@ function Masonry() {
   const frame = useRef(null);
   const [items, setItems] = useState([]);    
   const [loading, setLoading] = useState(true);
-  //모션중 재이벤트 방지를 위하 state추가
   const [enableClick, setEnableClick] = useState(true)
   
 
-  const getFlickr = async (name) =>{  
-    await axios.get(name).then((json)=>{    
+  const getFlickr = async (opt) =>{  
+    const key = '89aae050d1d8c006bdb5bf866029199d';
+    const method1 = 'flickr.interestingness.getList';
+    const method2 = 'flickr.photos.search';
+    const num = opt.count;
+    let url = '';
+
+    //인수로 받은 객체의 type값이 interest이면 interest이미지 데이터를 불러오는 url을 반환
+    if(opt.type==='interest'){
+      url = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
+    }
+    //인수로 받은 객체의 type값이 search면 tags를 받아서 해당 검색어의 데이터를 불러오는 url을 반환
+    if(opt.type==='search'){
+      url = `https://www.flickr.com/services/rest/?method=${method2}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
+    }  
+
+    //위에서 반환된 url을 가지고 데이터 요청
+    await axios.get(url).then((json)=>{    
       setItems(json.data.photos.photo);
     });  
 
@@ -38,27 +42,34 @@ function Masonry() {
 
       setTimeout(()=>{
         setEnableClick(true);
-      },1000);//frame에 on이 붙어서 올라오는 모션동안 재클릭 방지
-    },1000); //masonry ui모션이 적용되는 시간동안 지연
+      },1000);
+    },1000); 
           
   }
 
   useEffect(()=>{
-    getFlickr(url1);
+    //처음 로딩시에는 interest 이미지 호출
+    getFlickr({
+      type:'interest',
+      count: 500
+    });
   },[]);
 
   return (
     <Layout name={'Masonry'}>        
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
-      <button onClick={()=>{ 
-        //버튼 클릭시 enableClick값이 true일때만 동작실행
-        if(enableClick){
-          //조건문 통과하자마자 false로 변경해서 재클릭 방지
+      <button onClick={()=>{      
+        if(enableClick){        
           setEnableClick(false);
           setLoading(true);
-          frame.current.classList.remove('on');    
-          getFlickr(url1);
+          frame.current.classList.remove('on');   
+
+          //interest방식으로 데이터 호출 
+          getFlickr({
+            type:'interest',
+            count: 500
+          });
         }  
         
       }}>interest 갤러리 보기</button>
@@ -69,9 +80,15 @@ function Masonry() {
           setEnableClick(false);
           setLoading(true);
           frame.current.classList.remove('on');  
-          getFlickr(url2);
+
+          //search방식으로 검색키워드 넣어서 데이터 호출
+          getFlickr({
+            type: 'search',
+            count: 100,
+            tags: 'spring'
+          })
         }        
-      }}>ocean 갤러리 보기</button>
+      }}>검색 갤러리 보기</button>
 
       <div className="frame" ref={frame}>       
         <Maconry

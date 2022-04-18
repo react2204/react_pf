@@ -3,11 +3,7 @@
     position: fixed; top: 0px; left: 50%;
     transform: translateX(-50%); z-index: -1;
   }
-  >.inner {    
-    // 갤러리페이지에서 inner에 transiiton이 걸려있어서
-    //브라우저 리사이즈시 프레임 넓이값이 바뀔때마다  모션이 발생
-    //이때 masonry가 아직 모션중인 넓이값을 제대로 인지를 못해서
-    //정렬시 UI가 틀어지는 문제를 해결하고자 갤러리 페이지만 inner의 transition 모션속도를 0으로 변경
+  >.inner {     
     transition: 0s;
 
     .frame {
