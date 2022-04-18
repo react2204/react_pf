@@ -9,6 +9,7 @@
     //이때 masonry가 아직 모션중인 넓이값을 제대로 인지를 못해서
     //정렬시 UI가 틀어지는 문제를 해결하고자 갤러리 페이지만 inner의 transition 모션속도를 0으로 변경
     transition: 0s;
+
     .frame {
       transform: translateY(200px); opacity: 0; transition: 1s;      
 
