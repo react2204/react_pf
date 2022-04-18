@@ -46,7 +46,7 @@ function Masonry() {
           
   }
 
-  const showSearch = (e) =>{   
+  const showSearchEnter = (e) =>{   
     //검색어 좌우로 빈칸 제거
     const result = input.current.value.trim();    
     //입력된 키보드값이 엔터가 아니면 함수 종료
@@ -73,19 +73,45 @@ function Masonry() {
     }
   }
 
+  const showSearch = (e) =>{   
+    //검색어 좌우로 빈칸 제거
+    const result = input.current.value.trim();  
+
+    //입력된 결과값이 없거나 빈문자열이면 경고창 띄우고 종료
+    if(!result || result ===''){
+      alert('검색어를 입력하세요.');
+      return;
+    }
+
+    if(enableClick){
+      setEnableClick(false);
+      setLoading(true);
+      frame.current.classList.remove('on');
+
+      getFlickr({
+        type:'search',
+        count: 1000,
+        tags: result
+      })
+      //검색 요청후 input 내용 비움
+      input.current.value='';
+    }
+  }
+
+
   useEffect(()=>{   
     getFlickr({
       type:'interest',
       count: 500
     });
   },[]);
-  //미션 - 검색창에 검색어 없이 검색요청시 경고창 출력, 검색어 입력후 키보드 enter눌렀을시 결과화면 출력, 검색결과 출력시 검색창 비우기
+  
   return (
     <Layout name={'Masonry'}>        
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
       <div className="searchBox">        
-        <input type="text" ref={input} onKeyUp={showSearch} />       
+        <input type="text" ref={input} onKeyUp={showSearchEnter} />       
         <button onClick={showSearch}>search</button>
       </div>
 
