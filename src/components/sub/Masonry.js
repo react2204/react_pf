@@ -44,40 +44,10 @@ function Masonry() {
       },1000);
     },1000); 
           
-  }
+  } 
 
-  const showSearchEnter = (e) =>{   
-    //검색어 좌우로 빈칸 제거
-    const result = input.current.value.trim();    
-    //입력된 키보드값이 엔터가 아니면 함수 종료
-    if(e.key !== 'Enter') return;
-
-    //입력된 결과값이 없거나 빈문자열이면 경고창 띄우고 종료
-    if(!result || result ===''){
-      alert('검색어를 입력하세요.');
-      return;
-    }
-
-    if(enableClick){
-      setEnableClick(false);
-      setLoading(true);
-      frame.current.classList.remove('on');
-
-      getFlickr({
-        type:'search',
-        count: 1000,
-        tags: result
-      })
-      //검색 요청후 input 내용 비움
-      input.current.value='';
-    }
-  }
-
-  const showSearch = (e) =>{   
-    //검색어 좌우로 빈칸 제거
+  const showSearch = () =>{  
     const result = input.current.value.trim();  
-
-    //입력된 결과값이 없거나 빈문자열이면 경고창 띄우고 종료
     if(!result || result ===''){
       alert('검색어를 입력하세요.');
       return;
@@ -92,8 +62,7 @@ function Masonry() {
         type:'search',
         count: 1000,
         tags: result
-      })
-      //검색 요청후 input 내용 비움
+      }) 
       input.current.value='';
     }
   }
@@ -111,7 +80,9 @@ function Masonry() {
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
       <div className="searchBox">        
-        <input type="text" ref={input} onKeyUp={showSearchEnter} />       
+        <input type="text" ref={input} onKeyUp={(e)=>{
+          if(e.key === 'Enter') showSearch();       
+        }} />       
         <button onClick={showSearch}>search</button>
       </div>
 
