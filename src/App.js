@@ -12,6 +12,7 @@ import News from './components/main/News';
 //sub 컴포넌트
 import Youtube from './components/sub/Youtube';
 import Gallery from './components/sub/Gallery';
+import Masonry from './components/sub/Masonry';
 import Member from './components/sub/Member';
 import Location from './components/sub/Location';
 import Join from './components/sub/Join';
@@ -37,6 +38,7 @@ function App() {
 
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/gallery' component={Gallery} />
+			<Route path='/masonry' component={Masonry} />
 			<Route path='/member' component={Member} />
 			<Route path='/location' component={Location} />
 			<Route path='/join' component={Join} />
