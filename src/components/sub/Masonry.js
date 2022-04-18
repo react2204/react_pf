@@ -31,7 +31,13 @@ function Masonry() {
       url = `https://www.flickr.com/services/rest/?method=${method2}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
     }  
  
-    await axios.get(url).then((json)=>{    
+    await axios.get(url).then((json)=>{
+      //api호출시 해당 검색어에 대한 결과값이 없으면
+      //경고창 띄우고 해당 함수 종료
+      if(json.data.photos.photo.length===0){
+        alert('해당 검색어의 이미지가 없습니다');
+        return;
+      }    
       setItems(json.data.photos.photo);
     });  
 
@@ -66,7 +72,6 @@ function Masonry() {
       input.current.value='';
     }
   }
-
 
   useEffect(()=>{   
     getFlickr({
