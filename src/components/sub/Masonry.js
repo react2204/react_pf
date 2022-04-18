@@ -21,21 +21,25 @@ function Masonry() {
   };
 
   const frame = useRef(null);
-  const [items, setItems] = useState([]);  
-  //로딩바 처리할 스테이트 추가
+  const [items, setItems] = useState([]);    
   const [loading, setLoading] = useState(true);
+  //모션중 재이벤트 방지를 위하 state추가
+  const [enableClick, setEnableClick] = useState(true)
   
 
   const getFlickr = async (name) =>{  
     await axios.get(name).then((json)=>{    
       setItems(json.data.photos.photo);
-    }); 
-    //flickr데이터 호출이 완료된 순간 masonry가 정렬하는 시간을 벌어주기 위해서
-    //1초 뒤에 로딩바 사라지고 레이아웃이 위로 올라오는 모션 처리
+    });  
+
     setTimeout(()=>{
       frame.current.classList.add('on'); 
       setLoading(false); 
-    },1000);
+
+      setTimeout(()=>{
+        setEnableClick(true);
+      },1000);//frame에 on이 붙어서 올라오는 모션동안 재클릭 방지
+    },1000); //masonry ui모션이 적용되는 시간동안 지연
           
   }
 
@@ -44,23 +48,29 @@ function Masonry() {
   },[]);
 
   return (
-    <Layout name={'Masonry'}>  
-      {/* loading state값이 true일때 로딩바 보이게 처리하고 */}
+    <Layout name={'Masonry'}>        
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
-      {/* 각 버튼 클릭시 setLoading(true)로 로딩바 보이게 처리 */}
-      <button onClick={()=>{   
-        setLoading(true);
-        frame.current.classList.remove('on');
-        //getFlickr가 호출되서 컴포넌트가 로딩완료되면 내부적으로 다시 로딩바 사라짐
-        getFlickr(url1);
+      <button onClick={()=>{ 
+        //버튼 클릭시 enableClick값이 true일때만 동작실행
+        if(enableClick){
+          //조건문 통과하자마자 false로 변경해서 재클릭 방지
+          setEnableClick(false);
+          setLoading(true);
+          frame.current.classList.remove('on');    
+          getFlickr(url1);
+        }  
+        
       }}>interest 갤러리 보기</button>
 
 
       <button onClick={()=>{ 
-        setLoading(true);
-        frame.current.classList.remove('on');  
-        getFlickr(url2);
+        if(enableClick){
+          setEnableClick(false);
+          setLoading(true);
+          frame.current.classList.remove('on');  
+          getFlickr(url2);
+        }        
       }}>ocean 갤러리 보기</button>
 
       <div className="frame" ref={frame}>       
