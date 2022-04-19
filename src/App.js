@@ -9,7 +9,6 @@ import Footer from './components/common/Footer';
 import Main from './components/main/Main';
 
 
-
 //sub 컴포넌트
 import Youtube from './components/sub/Youtube';
 import Gallery from './components/sub/Gallery';
@@ -26,8 +25,7 @@ function App() {
 	return (
 		<>
 			<Switch>
-				<Route exact path='/'>
-					<Header type={'main'} logoSrc={`${path}/img/logo1.png`} />
+				<Route exact path='/'>					
 					<Main />
 				</Route>
 
