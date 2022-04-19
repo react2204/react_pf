@@ -29,7 +29,7 @@ function News() {
 	},[]);
 
 	return (
-		<section id='news'>
+		<section id='news' className='myScroll'>
 			<h1>Recent News</h1>
 
 			<ul>
