@@ -40,7 +40,10 @@ function Main() {
     getPos();
     window.addEventListener('resize', getPos);
     window.addEventListener('scroll', activation);
-    return () => window.removeEventListener('resize', getPos);
+    return () => {
+      window.removeEventListener('resize', getPos);
+      window.removeEventListener('scroll', activation);
+    }
   },[]);
 
   useEffect(()=>{    
