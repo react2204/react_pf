@@ -21,15 +21,29 @@ function Main() {
     pos.current=[];   
     for( const sec of secs) pos.current.push(sec.offsetTop);   
   }
+
+  const activation = () => {
+    const base = -200;
+    let scroll = window.scrollY;
+    const btns = main.current.querySelectorAll('.btns li');
+
+    pos.current.map((pos, idx)=>{
+      if(scroll >= pos+base){
+        for(const btn of btns) btn.classList.remove('on');
+        btns[idx].classList.add('on');
+      }
+    })
+
+  }
   
   useEffect(()=>{   
     getPos();
     window.addEventListener('resize', getPos);
+    window.addEventListener('scroll', activation);
     return () => window.removeEventListener('resize', getPos);
   },[]);
 
-  useEffect(()=>{
-    //index값이 변경될 때마다 해당 순번의 위치로 스크롤 이동
+  useEffect(()=>{    
     new Anime(window, {
       prop: 'scroll',
       value: pos.current[index],
