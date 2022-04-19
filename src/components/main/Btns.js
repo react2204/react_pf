@@ -1,12 +1,12 @@
 import React from 'react'
 
-function Btns() {
+function Btns(props) {
   return (
     <ul className="btns">
-      <li className='on'></li>
-      <li></li>
-      <li></li>
-      <li></li>
+      <li className='on' onClick={()=>props.setIndex(0)}></li>
+      <li onClick={()=>props.setIndex(1)}></li>
+      <li onClick={()=>props.setIndex(2)}></li>
+      <li onClick={()=>props.setIndex(3)}></li>
     </ul>
   )
 }
