@@ -10,7 +10,9 @@ $mobile: 539px;
 
 //main
 @import 'main/visual';
-@import 'main/content';
+@import 'main/news';
+@import 'main/vids';
+@import 'main/pics';
 
 //sub
 @import 'sub/member';

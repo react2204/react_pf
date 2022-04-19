@@ -29,7 +29,7 @@ function News() {
 	},[]);
 
 	return (
-		<main>
+		<section id='news'>
 			<h1>Recent News</h1>
 
 			<ul>
@@ -56,7 +56,7 @@ function News() {
 					}					
 				})}				
 			</ul>
-		</main>
+		</section>
 	);
 }
 

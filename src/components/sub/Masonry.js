@@ -48,7 +48,7 @@ function Masonry() {
       setTimeout(()=>{
         setEnableClick(true);
       },1000);
-    },1000); 
+    },500); 
           
   } 
 
@@ -85,8 +85,7 @@ function Masonry() {
     <Layout name={'Masonry'} subText={'Custom Gallery'}>        
       {loading ? <img className='loading' src={path+'/img/loading.gif'} /> : null}
 
-      <div className="searchBox">    
-       
+      <div className="searchBox">  
         <input type="text" ref={input} onKeyUp={(e)=>{
           if(e.key === 'Enter') showSearch();       
         }} />       
