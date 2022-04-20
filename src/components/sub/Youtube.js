@@ -35,6 +35,7 @@ function Youtube() {
 					return (				
 						<article key={idx} onClick={()=>{						
 							setIndex(idx);
+							//자식컴포넌트에서 리턴하고 있는 open함수를 호출해서 팝업 출력
 							pop.current.open();
 						}}>
 							<img src={item.snippet.thumbnails.medium.url} />
@@ -46,11 +47,13 @@ function Youtube() {
 				})}
 			</Layout>			
 			
+			{/* forwardRef로 내보내진 컴포넌트를 활용하기 위해서는 부모컴포넌트에서 useRef로 참조 */}
 			<Popup ref={pop}>	
 				{/*loading이 true일떄 팝업안에 유튜브 데이터 출력*/}
 				{loading && (
 					<iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe>
 				)}	
+				{/* pop.current(Popup컴포넌트가 리턴하는 open, close를 품고 있는 객체) */}
 				<span onClick={()=>pop.current.close()}>close</span>
 			</Popup>
 		

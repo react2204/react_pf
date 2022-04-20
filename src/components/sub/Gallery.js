@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Layout from '../common/Layout';
 import Popup from '../common/Popup';
 
@@ -11,11 +11,14 @@ function Gallery() {
 
 	const [items, setItems] = useState([]);	
 	const [index, setIndex] = useState(0);
+	const [loading, setLoading] = useState(false);
+	const pop = useRef(null);
 
 	useEffect(()=>{
 		axios.get(url).then((json)=>{
 			console.log(json.data.photos.photo);
 			setItems(json.data.photos.photo);
+			setLoading(true);
 		})
 	},[]);
 
@@ -27,6 +30,7 @@ function Gallery() {
 						return (
 							<li key={idx} onClick={()=>{						
 								setIndex(idx);
+								pop.current.open();
 							}}>
 								<div className="inner">
 									<div className="pic">
@@ -39,6 +43,13 @@ function Gallery() {
 					})}
 				</ul>
 			</Layout>		
+
+			<Popup ref={pop}>
+				{loading && (
+					<img src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`} />
+				)}
+				<span onClick={()=>pop.current.close()}>close</span>
+			</Popup>
 		
 		</>
 
