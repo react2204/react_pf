@@ -31,7 +31,7 @@ function Youtube() {
 					return (				
 						<article key={idx} onClick={()=>{						
 							setIndex(idx);
-							//pop.current.open();
+							pop.current.open();
 						}}>
 							<img src={item.snippet.thumbnails.medium.url} />
 							<h2>{item.snippet.title}</h2>
@@ -44,8 +44,9 @@ function Youtube() {
 		
 			
 			<Popup ref={pop}>
-				<iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe>
-				{/* <span onClick={()=>pop.current.close()}>close</span> */}
+				데이터
+				{/* <iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe> */}
+				<span onClick={()=>pop.current.close()}>close</span>
 			</Popup>
 		
 		</>
