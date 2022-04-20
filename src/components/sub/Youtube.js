@@ -1,16 +1,16 @@
 import Layout from '../common/Layout';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Popup from '../common/Popup';
 
 function Youtube() {
+	const pop = useRef(null);
 	const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
 	const num = 5;
 	const id = 'PLHtvRFLN5v-UVVpNfWqtgZ6YPs9ZJMWRK';
 	const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&maxResults=${num}&playlistId=${id}`;
 
-	const [items, setItems] = useState([]);
-	const [open, setOpen] = useState(false);
+	const [items, setItems] = useState([]);	
 	const [index, setIndex] = useState(0);
 
 	useEffect(() => {	
@@ -19,6 +19,7 @@ function Youtube() {
 			setItems(json.data.items);
 		});
 	}, []);
+	
 
 	return (
 		<>
@@ -28,10 +29,10 @@ function Youtube() {
 					const date = item.snippet.publishedAt;
 
 					return (				
-						<article key={idx} onClick={()=>{
-							setOpen(true);
+						<article key={idx} onClick={()=>{						
 							setIndex(idx);
-							}}>
+							//pop.current.open();
+						}}>
 							<img src={item.snippet.thumbnails.medium.url} />
 							<h2>{item.snippet.title}</h2>
 							<p>{desc.length > 150 ? desc.substr(0, 150) + '...' : desc}</p>
@@ -41,11 +42,12 @@ function Youtube() {
 				})}
 			</Layout>
 		
-			{open ? (
-				<Popup setOpen={setOpen}>
-					<iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe>
-				</Popup>
-			) : null}
+			
+			<Popup ref={pop}>
+				<iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe>
+				{/* <span onClick={()=>pop.current.close()}>close</span> */}
+			</Popup>
+		
 		</>
 	);
 }
