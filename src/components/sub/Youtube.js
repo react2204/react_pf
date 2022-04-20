@@ -12,18 +12,23 @@ function Youtube() {
 
 	const [items, setItems] = useState([]);	
 	const [index, setIndex] = useState(0);
+	//데이터 로딩에 관련한 state추가
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {	
 		axios.get(url).then((json) => {
 			console.log(json.data.items);
 			setItems(json.data.items);
+			//모든 데이터가 호출되고 state값에 담기면 loding state값 true로 변경
+			setLoading(true);
 		});
 	}, []);
 	
 
 	return (
 		<>
-			<Layout name={'Youtube'}>
+			<Layout name={'Youtube'}>				
+				
 				{items.map((item, idx) => {
 					const desc = item.snippet.description;
 					const date = item.snippet.publishedAt;
@@ -41,11 +46,13 @@ function Youtube() {
 					);
 				})}
 			</Layout>
-		
+				
 			
-			<Popup ref={pop}>
-				데이터
-				{/* <iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe> */}
+			<Popup ref={pop}>	
+					{/*loading이 true일떄 팝업안에 유튜브 데이터 출력*/}
+				{loading && (
+					<iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe>
+				)}	
 				<span onClick={()=>pop.current.close()}>close</span>
 			</Popup>
 		
