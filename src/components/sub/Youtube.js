@@ -22,8 +22,7 @@ function Youtube() {
 			//모든 데이터가 호출되고 state값에 담기면 loding state값 true로 변경
 			setLoading(true);
 		});
-	}, []);
-	
+	}, []);	
 
 	return (
 		<>
@@ -45,11 +44,10 @@ function Youtube() {
 						</article>
 					);
 				})}
-			</Layout>
-				
+			</Layout>			
 			
 			<Popup ref={pop}>	
-					{/*loading이 true일떄 팝업안에 유튜브 데이터 출력*/}
+				{/*loading이 true일떄 팝업안에 유튜브 데이터 출력*/}
 				{loading && (
 					<iframe src={'https://www.youtube.com/embed/'+items[index].snippet.resourceId.videoId} frameBorder="0"></iframe>
 				)}	

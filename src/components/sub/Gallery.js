@@ -9,8 +9,7 @@ function Gallery() {
 	const num = 20;
 	const url = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
 
-	const [items, setItems] = useState([]);
-	const [open,  setOpen] = useState(false);
+	const [items, setItems] = useState([]);	
 	const [index, setIndex] = useState(0);
 
 	useEffect(()=>{
@@ -26,8 +25,7 @@ function Gallery() {
 				<ul>
 					{items.map((item,idx)=>{
 						return (
-							<li key={idx} onClick={()=>{
-								setOpen(true);
+							<li key={idx} onClick={()=>{						
 								setIndex(idx);
 							}}>
 								<div className="inner">
@@ -40,13 +38,8 @@ function Gallery() {
 						)
 					})}
 				</ul>
-			</Layout>
-
-			{open? (
-				<Popup setOpen={setOpen}>
-					<img src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`} />
-				</Popup>
-			): null}
+			</Layout>		
+		
 		</>
 
 
