@@ -1,4 +1,5 @@
 import Layout from '../common/Layout';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMembers } from '../../redux/actions';
 
@@ -47,7 +48,7 @@ function Member() {
 
 	return (
 		<Layout name={'Member'}>
-			{/* 버튼 클릭시 액션객체를 dispatch를 통해서 reducer에 전달 */}
+			{/* <button onClick={test}>change</button> */}
 			<button onClick={() => dispatch(action)}>수정</button>
 			<ul className='memberList'>
 				{members.map((member, idx) => {
