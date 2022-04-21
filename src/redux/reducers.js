@@ -56,6 +56,7 @@ const reducers = combineReducers({
 export default reducers;
 
 /*
+위의 switch문과 동일한 구조
 if(action.type) {
   if(action.type==='SET_MEMBERS'){
     return {...state, members: action.payload}

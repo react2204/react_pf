@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 
 function Member() {
 	const path = process.env.PUBLIC_URL;
-	const members = useSelector((state) => console.log(state));
+	const members = useSelector((state) => state.memberReducer.members);
+	console.log(members);
 
 	return (
 		<Layout name={'Member'}>
@@ -17,6 +18,7 @@ function Member() {
 				}}>
 				멤버정보 변경
 			</button>
+			*/}
 
 			<ul className='memberList'>
 				{members.map((member, idx) => {
@@ -28,7 +30,7 @@ function Member() {
 						</li>
 					);
 				})}
-			</ul> */}
+			</ul>
 		</Layout>
 	);
 }
