@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setYoutube } from './redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMembers, setYoutube } from './redux/actions';
 import axios from 'axios';
 
 import './scss/style.scss';
@@ -24,7 +24,15 @@ import { useEffect } from 'react';
 const path = process.env.PUBLIC_URL;
 
 function App() {
+	//const abc = useSelector((state) => state.memberReducer.members);
 	const dispatch = useDispatch();
+
+	const fetchMembers = async () => {
+		const url = path + '/DB/member.json';
+		await axios.get(url).then((json) => {
+			dispatch(setMembers(json.data.data));
+		});
+	};
 
 	const fetchYoutube = async () => {
 		const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
@@ -38,6 +46,7 @@ function App() {
 	};
 
 	useEffect(() => {
+		fetchMembers();
 		fetchYoutube();
 	}, []);
 
