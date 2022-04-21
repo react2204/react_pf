@@ -8,7 +8,6 @@ import Footer from './components/common/Footer';
 //main 컴포넌트
 import Main from './components/main/Main';
 
-
 //sub 컴포넌트
 import Youtube from './components/sub/Youtube';
 import Gallery from './components/sub/Gallery';
@@ -18,14 +17,13 @@ import Location from './components/sub/Location';
 import Join from './components/sub/Join';
 import Community from './components/sub/Community';
 
-
 const path = process.env.PUBLIC_URL;
 
 function App() {
 	return (
 		<>
 			<Switch>
-				<Route exact path='/'>					
+				<Route exact path='/'>
 					<Main />
 				</Route>
 
@@ -41,7 +39,7 @@ function App() {
 			<Route path='/location' component={Location} />
 			<Route path='/join' component={Join} />
 			<Route path='/community' component={Community} />
-			
+
 			<Footer />
 		</>
 	);

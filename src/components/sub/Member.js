@@ -1,20 +1,15 @@
 import Layout from '../common/Layout';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function Member() {
 	const path = process.env.PUBLIC_URL;
-	const [members, setMembers] = useState([]);
-
-	useEffect(() => {
-		axios.get(`${path}/DB/member.json`).then((json) => {
-			setMembers(json.data.data);
-		});
-	}, []);
+	const members = useSelector((state) => console.log(state));
 
 	return (
 		<Layout name={'Member'}>
-			<button
+			{/* <button
 				onClick={() => {
 					const newMembers = [...members];
 					newMembers[0].name = 'Jane';
@@ -33,7 +28,7 @@ function Member() {
 						</li>
 					);
 				})}
-			</ul>
+			</ul> */}
 		</Layout>
 	);
 }
