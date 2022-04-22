@@ -10,7 +10,6 @@ const memberReducer = (state = { members: [] }, action) => {
 	}
 };
 
-//유튜브 데이터를 관리할 리듀서
 const youtubeReducer = (state = { youtube: [] }, action) => {
 	switch (action.type) {
 		case 'SET_YOUTUBE':
@@ -21,9 +20,20 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
 	}
 };
 
+const flickrReducer = (state = { flickr: [] }, action) => {
+	switch (action.type) {
+		case 'SET_FLICKR':
+			return { ...state, flickr: action.payload };
+
+		default:
+			return state;
+	}
+};
+
 const reducers = combineReducers({
 	memberReducer,
 	youtubeReducer,
+	flickrReducer,
 });
 
 export default reducers;
