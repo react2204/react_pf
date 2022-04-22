@@ -2,15 +2,38 @@ import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Popup from '../common/Popup';
 
-function Vids() {
+function Vids(props) {
 	const vidData = useSelector((state) => state.youtubeReducer.youtube);
 	const pop = useRef(null);
 	const [index, setIndex] = useState(0);
+	//현재 스크롤되고 있는 거리값
+	const scrolled = props.scrolled;
+	//해당 섹션의 세로 위치값
+	const start = props.posStart;
+	//스크롤 위치 보정값
+	//(양수: 기준점을 위로 끌어올림, 음수: 기준점을 아래로 내림)
+	const base = 300;
+	//보정값을 적용한 스크롤 거리값
+	const position = scrolled - start + base;
 
 	return (
 		<>
 			<section id='vids' className='myScroll'>
-				<h1>Recent Youtube</h1>
+				<h2
+					style={
+						position >= 0 ? { transform: `translateX(${position}px)` } : null
+					}>
+					Recent Youtube
+				</h2>
+
+				<h2
+					style={
+						position >= 0
+							? { transform: `translateX(${position * 2}px)` }
+							: null
+					}>
+					2배 느리게 이동
+				</h2>
 				<ul className='vidList'>
 					{vidData.map((vid, idx) => {
 						if (idx < 3)

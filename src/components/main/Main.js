@@ -57,16 +57,12 @@ function Main() {
 		});
 	}, [index]);
 
-	useEffect(() => {
-		console.log(scrolled);
-	}, [scrolled]);
-
 	return (
 		<main ref={main}>
 			<Header type={'main'} logoSrc={`${path}/img/logo1.png`} />
 			<Visual />
 			<News />
-			<Vids />
+			<Vids scrolled={scrolled} posStart={pos.current[2]} />
 			<Pics />
 			<Btns setIndex={setIndex} />
 		</main>
