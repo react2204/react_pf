@@ -2,8 +2,14 @@ import { combineReducers } from 'redux';
 
 const memberReducer = (state = { members: [] }, action) => {
 	switch (action.type) {
-		case 'SET_MEMBERS':
+		case 'MEMBER_START':
+			return { ...state };
+
+		case 'MEMBER_SUCCESS':
 			return { ...state, members: action.payload };
+
+		case 'MEMBER_ERROR':
+			return { ...state, error: action.payload };
 
 		default:
 			return state;

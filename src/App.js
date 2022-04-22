@@ -1,7 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMembers, setYoutube } from './redux/actions';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 import './scss/style.scss';
 //common 컴포넌트
@@ -26,19 +24,10 @@ const path = process.env.PUBLIC_URL;
 function App() {
 	const dispatch = useDispatch();
 
-	const fetchMembers = async () => {
-		const url = path + '/DB/member.json';
-		await axios.get(url).then((json) => {
-			dispatch(setMembers(json.data.data));
-		});
-	};
-
-	const opt = { type: 'interest' };
-
 	useEffect(() => {
-		fetchMembers();
-		dispatch({ type: 'FLICKR_START', opt });
+		dispatch({ type: 'MEMBER_START' });
 		dispatch({ type: 'YOUTUBE_START' });
+		dispatch({ type: 'FLICKR_START', opt: { type: 'interest' } });
 	}, []);
 
 	return (

@@ -1,4 +1,10 @@
 import axios from 'axios';
+const path = process.env.PUBLIC_URL;
+
+export const getMember = async () => {
+	const url = path + '/DB/member.json';
+	return await axios.get(url);
+};
 
 export const getFlickr = async (opt) => {
 	const key = '89aae050d1d8c006bdb5bf866029199d';
