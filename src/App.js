@@ -1,5 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import * as types from './redux/actionType';
 
 import './scss/style.scss';
 //common 컴포넌트
@@ -25,9 +26,9 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: 'MEMBER_START' });
-		dispatch({ type: 'YOUTUBE_START' });
-		dispatch({ type: 'FLICKR_START', opt: { type: 'interest' } });
+		dispatch({ type: types.MEMBER.start });
+		dispatch({ type: types.YOUTUBE.start });
+		dispatch({ type: types.FLICKR.start, opt: { type: 'interest' } });
 	}, []);
 
 	return (
