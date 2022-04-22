@@ -22,8 +22,14 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
 
 const flickrReducer = (state = { flickr: [] }, action) => {
 	switch (action.type) {
-		case 'SET_FLICKR':
+		case 'FLICKR_START':
+			return { ...state };
+
+		case 'FLICKR_SUCCESS':
 			return { ...state, flickr: action.payload };
+
+		case 'FLICKR_ERROR':
+			return { ...state, error: action.payload };
 
 		default:
 			return state;
