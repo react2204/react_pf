@@ -22,7 +22,7 @@ export function* callYoutube() {
 }
 export function* returnYoutube(action) {
 	try {
-		const response = yield call(getYoutube, action.opt);
+		const response = yield call(getYoutube);
 		yield put({ type: 'YOUTUBE_SUCCESS', payload: response.data.items });
 	} catch (err) {
 		yield put({ type: 'YOUTUBE_ERROR', payload: err });

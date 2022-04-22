@@ -19,7 +19,7 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
 			return { ...state, youtube: action.payload };
 
 		case 'YOUTUBE_ERROR':
-			return { ...state, youtube: action.payload };
+			return { ...state, error: action.payload };
 
 		default:
 			return state;

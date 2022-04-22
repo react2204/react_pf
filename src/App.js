@@ -33,8 +33,11 @@ function App() {
 		});
 	};
 
+	const opt = { type: 'interest' };
+
 	useEffect(() => {
 		fetchMembers();
+		dispatch({ type: 'FLICKR_START', opt });
 		dispatch({ type: 'YOUTUBE_START' });
 	}, []);
 

@@ -5,7 +5,7 @@ import Layout from '../common/Layout';
 function Gallery() {
 	const { flickr } = useSelector((state) => state.flickrReducer);
 	const dispatch = useDispatch();
-	const [opt, setOpt] = useState({ type: 'interest2' });
+	const [opt, setOpt] = useState({ type: 'interest' });
 	const input = useRef(null);
 
 	useEffect(() => {
