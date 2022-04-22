@@ -24,7 +24,6 @@ import { useEffect } from 'react';
 const path = process.env.PUBLIC_URL;
 
 function App() {
-	//const abc = useSelector((state) => state.memberReducer.members);
 	const dispatch = useDispatch();
 
 	const fetchMembers = async () => {
@@ -34,20 +33,9 @@ function App() {
 		});
 	};
 
-	const fetchYoutube = async () => {
-		const key = 'AIzaSyBZFBuapkASPcRBXB2-d_ak5-ecCpVicI4';
-		const num = 5;
-		const id = 'PLHtvRFLN5v-UVVpNfWqtgZ6YPs9ZJMWRK';
-		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&maxResults=${num}&playlistId=${id}`;
-
-		await axios.get(url).then((json) => {
-			dispatch(setYoutube(json.data.items));
-		});
-	};
-
 	useEffect(() => {
 		fetchMembers();
-		fetchYoutube();
+		dispatch({ type: 'YOUTUBE_START' });
 	}, []);
 
 	return (

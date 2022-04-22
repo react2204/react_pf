@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../common/Layout';
 
 function Gallery() {
-	const { flickr, error } = useSelector((state) => state.flickrReducer);
-	console.log(flickr);
-	console.log(error);
+	const { flickr } = useSelector((state) => state.flickrReducer);
 	const dispatch = useDispatch();
 	const [opt, setOpt] = useState({ type: 'interest2' });
 	const input = useRef(null);
