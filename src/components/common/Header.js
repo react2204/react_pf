@@ -1,13 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Menu from './Menu';
 
 function Header(props) {
+	const [opened, setOpened] = useState(false);
 	const active = { color: 'aqua' };
 	const path = process.env.PUBLIC_URL;
 	const menu = useRef(null);
+
+	useEffect(() => {
+		opened ? menu.current.open() : menu.current.close();
+	}, [opened]);
 
 	return (
 		<>
@@ -60,12 +65,16 @@ function Header(props) {
 					<FontAwesomeIcon
 						icon={faBars}
 						onClick={() => {
-							menu.current.open();
+							setOpened(!opened);
 						}}
 					/>
 				</div>
 			</header>
-			<Menu logoSrc={`${path}/img/logo1.png`} ref={menu} />
+			<Menu
+				logoSrc={`${path}/img/logo1.png`}
+				ref={menu}
+				setOpened={setOpened}
+			/>
 		</>
 	);
 }
