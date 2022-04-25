@@ -39,10 +39,10 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <!-- 강제로 img, video태그를 출력해서 이미지와, 영상을 캐싱하기 위한 공간, 화면에서는 숨김처리 -->
-  <div class="default"></div>
+  <!-- <div class="default"></div> -->
 
   <!-- 모든 이미지와 영상이 로딩 완료되기전까지 보일 로딩화면 -->
-  <div class="mask">LOADING...</div>
+  <!-- <div class="mask">LOADING...</div> -->
 
   <script>
     //중요 : 로컬에서는 테스트가 안되므로 무조건 배포한뒤..캐싱될 소스 주소를 배포된 서버상의 URL로 입력
@@ -71,9 +71,10 @@
     //동적으로 배열에 있는 이미지 소스와 영상 소스를 가지고 강제로 dom을 만들어서 index.html에 꽂아넣어서 캐싱처리하고 
     //캐싱되는 동안 마스크화면을 보여주줌
     //모든 DOM 소스가 캐싱완료되면 마스크와 강제로 만들어진 DOM 프레임인 defaults 모두 제거
-    createDOM();
+    //createDOM();
 
     //Promise.all로 loadImg와 loadVid함수가 모두 프로미스 객체를 반환할때까지 기다리며 동기화처리
+    /*
     Promise.all([loadImg(), loadVid()])
       //두 함수의 프로미스객체가 생성되면 해당값은 then문에서 배열로 반환됨
       .then((result) => {
@@ -92,8 +93,8 @@
             defaults.remove();
           }, 2000);
         }
-
       })
+      */
 
 
     //배열데이터를 통해 동적 DOM생성함수

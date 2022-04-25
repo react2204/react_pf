@@ -19,19 +19,19 @@ function Visual() {
 				navigation={true}
 				modules={[Pagination, Navigation]}>
 				<SwiperSlide>
-					<video src={`${path}/img/vid1.mp4`} autoPlay muted loop></video>
+					{/* <video src={`${path}/img/vid1.mp4`} autoPlay muted loop></video> */}
 				</SwiperSlide>
 				<SwiperSlide>
-					<video src={`${path}/img/vid2.mp4`} autoPlay muted loop></video>
+					{/* <video src={`${path}/img/vid2.mp4`} autoPlay muted loop></video> */}
 				</SwiperSlide>
 				<SwiperSlide>
-					<video src={`${path}/img/vid3.mp4`} autoPlay muted loop></video>
+					{/* <video src={`${path}/img/vid3.mp4`} autoPlay muted loop></video> */}
 				</SwiperSlide>
 				<SwiperSlide>
-					<video src={`${path}/img/vid4.mp4`} autoPlay muted loop></video>
+					{/* <video src={`${path}/img/vid4.mp4`} autoPlay muted loop></video> */}
 				</SwiperSlide>
 				<SwiperSlide>
-					<video src={`${path}/img/vid5.mp4`} autoPlay muted loop></video>
+					{/* <video src={`${path}/img/vid5.mp4`} autoPlay muted loop></video> */}
 				</SwiperSlide>
 			</Swiper>
 		</figure>

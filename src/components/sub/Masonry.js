@@ -65,7 +65,7 @@ function Masonry() {
 
 			getFlickr({
 				type: 'search',
-				count: 1000,
+				count: 30,
 				tags: result,
 			});
 			input.current.value = '';
@@ -75,7 +75,7 @@ function Masonry() {
 	useEffect(() => {
 		getFlickr({
 			type: 'interest',
-			count: 500,
+			count: 30,
 		});
 	}, []);
 

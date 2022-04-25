@@ -84,7 +84,6 @@ function Community() {
 
 	//posts의 상태값이 변경될때마다 콘솔문 출력
 	useEffect(() => {
-		console.log('posts state변경됨');
 		localStorage.setItem('posts', JSON.stringify(posts));
 	}, [posts]);
 

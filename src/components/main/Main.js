@@ -29,7 +29,7 @@ function Main() {
 		let scroll = window.scrollY;
 		//현재 스크롤되는 거는 값을 scrolled state에 저장
 		setScrolled(scroll);
-		const btns = main.current.querySelectorAll('.btns li');
+		const btns = main.current.querySelectorAll('.vBtns li');
 
 		pos.current.map((pos, idx) => {
 			if (scroll >= pos + base) {

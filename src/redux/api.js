@@ -10,7 +10,7 @@ export const getFlickr = async (opt) => {
 	const key = '89aae050d1d8c006bdb5bf866029199d';
 	const method1 = 'flickr.interestingness.getList';
 	const method2 = 'flickr.photos.search';
-	const num = 50;
+	const num = 30;
 	let url = '';
 
 	if (opt.type === 'interest') {

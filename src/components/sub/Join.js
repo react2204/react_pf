@@ -2,6 +2,7 @@ import Layout from '../common/Layout';
 import { useState, useEffect } from 'react';
 
 function Join() {
+	console.log('join 컴포넌트 호출');
 	const initVal = {
 		userid: '',
 		pwd1: '',
@@ -93,26 +94,23 @@ function Join() {
 	const handleReset = () => {
 		setVal(initVal);
 		setErr({});
+		//handelReset이 실행될떄 회원가입 축하메세지가 뜨지 않도록 수정
+		setIsSubmit(false);
 	};
 
 	useEffect(() => {
-		//객체의 키값을 반환하는 메서드
+		console.log('err스테이트 변경');
 		const len = Object.keys(err).length;
 
 		if (len === 0 && isSubmit) {
 			setSuccess(true);
-			//handleReset();
-			//err값이 의존성으로 등록되어 있는 useEffect안에
-			//다시 err 스테이트를 변경하는 함수나 구문이 있으면 무한루프에 빠지니 주의
 		} else {
 			setSuccess(false);
 		}
 	}, [err]);
 
-	//success 스테이트값을 의존성 배열로 해서
 	useEffect(() => {
-		//success값이 true로 변경되면
-		//기존 인풋요소 초기화
+		console.log('success스테이트 변경');
 		handleReset();
 	}, [success]);
 
