@@ -37,7 +37,12 @@ const Menu = forwardRef((props, ref) => {
 								<img src={props.logoSrc} />
 							</NavLink>
 						</h1>
-						<ul id='gnb' onClick={() => setOpen(false)}>
+						<ul
+							id='gnb'
+							onClick={() => {
+								setOpen(false);
+								props.setOpened(!props.opened);
+							}}>
 							<li>
 								<NavLink to='/member' activeStyle={active}>
 									Member

@@ -73,6 +73,7 @@ function Header(props) {
 			<Menu
 				logoSrc={`${path}/img/logo1.png`}
 				ref={menu}
+				opened={opened}
 				setOpened={setOpened}
 			/>
 		</>
