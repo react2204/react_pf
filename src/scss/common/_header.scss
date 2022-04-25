@@ -6,6 +6,7 @@ header {
 		height: 80px;
 		margin: 0px auto;
 		position: relative;
+		overflow: hidden;
 
 		h1 {
 			position: absolute;
@@ -13,9 +14,6 @@ header {
 			left: 0px;
 
 			a {
-				font: bold 24px/1 'arial';
-				color: #fff;
-
 				img {
 					width: 50px;
 				}

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -57,10 +57,15 @@ function Header(props) {
 						</li>
 					</ul>
 
-					<FontAwesomeIcon icon={faBars} onClick={() => menu.current.open()} />
+					<FontAwesomeIcon
+						icon={faBars}
+						onClick={() => {
+							menu.current.open();
+						}}
+					/>
 				</div>
 			</header>
-			<Menu logoSrc={`${path}/img/logo1.png`} ref={menu} />;
+			<Menu logoSrc={`${path}/img/logo1.png`} ref={menu} />
 		</>
 	);
 }

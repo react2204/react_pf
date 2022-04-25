@@ -19,11 +19,19 @@ const Menu = forwardRef((props, ref) => {
 				<>
 					<motion.nav
 						initial={{
-							x: -200,
-							//transition: { duration: 0.5, ease: 'linear', bounce: 0 },
+							x: -280,
+							opacity: 0,
 						}}
-						animate={{ x: 0 }}
-						exit={{ x: -200 }}>
+						animate={{
+							x: 0,
+							opacity: 1,
+							transition: { duration: 0.5, type: 'spring', bounce: 0 },
+						}}
+						exit={{
+							x: -280,
+							opacity: 0,
+							transition: { duration: 0.5, type: 'spring', bounce: 0 },
+						}}>
 						<h1>
 							<NavLink exact to='/' activeStyle={active}>
 								<img src={props.logoSrc} />
