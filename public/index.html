@@ -78,7 +78,9 @@
 
         if (loadedImg && loadedVid) {
           mask.classList.add('off');
-          setTimeout(() => mask.remove(), 3000);
+          setTimeout(() => {
+            mask.remove()
+          }, 2000);
         }
 
       })
@@ -117,6 +119,7 @@
     function loadVid() {
       return new Promise((res, rej) => {
         const vidDOM = defaults.querySelectorAll('video');
+        console.log(vidDOM);
         let countVid = 0;
 
         vidDOM.forEach((vid) => {
