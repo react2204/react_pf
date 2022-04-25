@@ -52,14 +52,10 @@
       'http://localhost:3000/react_pf/img/sub4.jpg',
       'http://localhost:3000/react_pf/img/sub5.jpg',
     ];
-
-    let loadedImg = false;
     const lenImg = imgs.length;
     const defaults = document.querySelector('.default');
     const mask = document.querySelector('.mask');
     tags = '';
-
-    //index.html이 동작되자마다 일단은 로딩화면이 뜨도록 설정
 
 
     //동적으로 배열에 있는 이미지 소스를 가지고 강제로 img dom을 만들어서 index.html에 꽂아넣어서  캐싱처리
@@ -68,7 +64,6 @@
     //동적으로 만들어진 이미지돔의 소스이미지가 모두 캐싱되면 
     loadImg()
       .then((result) => {
-
         if (result) {
           //로딩화면 사라지고 메인화면 보이게 출력
           mask.classList.add('off');
