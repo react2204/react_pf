@@ -6,6 +6,7 @@ import Menu from './Menu';
 
 function Header(props) {
 	const active = { color: 'aqua' };
+	const path = process.env.PUBLIC_URL;
 
 	return (
 		<>
@@ -58,7 +59,7 @@ function Header(props) {
 					<FontAwesomeIcon icon={faBars} />
 				</div>
 			</header>
-			<Menu />;
+			<Menu logoSrc={`${path}/img/logo1.png`} />;
 		</>
 	);
 }
