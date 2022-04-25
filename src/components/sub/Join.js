@@ -8,14 +8,14 @@ function Join() {
 		pwd2: '',
 		email: '',
 		comments: '',
-    edu: '',
+		edu: '',
 		gender: null,
 		interest: null,
 	};
 	const [val, setVal] = useState(initVal);
 	const [err, setErr] = useState({});
-  const [success, setSuccess] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
+	const [success, setSuccess] = useState(false);
+	const [isSubmit, setIsSubmit] = useState(false);
 
 	const check = (val) => {
 		const errs = {};
@@ -47,12 +47,12 @@ function Join() {
 		if (!val.gender) {
 			errs.gender = '성별을 선택하세요';
 		}
-    if(!val.interests) {
-      errs.interests = '관심사를 하나이상 선택하세요.';
-    }
-    if(val.edu===''){
-      errs.edu = '최종 학력을 선택하세요';
-    }
+		if (!val.interests) {
+			errs.interests = '관심사를 하나이상 선택하세요.';
+		}
+		if (val.edu === '') {
+			errs.edu = '최종 학력을 선택하세요';
+		}
 
 		return errs;
 	};
@@ -62,31 +62,31 @@ function Join() {
 		setVal({ ...val, [name]: value });
 	};
 
-	const handleCheck = (e) => { 
-    let isCheck = false;  
-    const {name} = e.target;    
-    const inputs = e.target.parentElement.querySelectorAll('input');    
-    inputs.forEach((el)=>{      
-      if(el.checked) isCheck=true;
-    });
-    
-    setVal({...val, [name]: isCheck});
-  };
+	const handleCheck = (e) => {
+		let isCheck = false;
+		const { name } = e.target;
+		const inputs = e.target.parentElement.querySelectorAll('input');
+		inputs.forEach((el) => {
+			if (el.checked) isCheck = true;
+		});
+
+		setVal({ ...val, [name]: isCheck });
+	};
 
 	const handleRadio = (e) => {
 		const { name } = e.target;
 		const isCheck = e.target.checked;
 		setVal({ ...val, [name]: isCheck });
 	};
-  
-  const handleSelect = (e) =>{   
-    const {name} = e.target;   
-    const isSelected = e.target.options[e.target.selectedIndex].value;
-    setVal({...val, [name]: isSelected});
-  }
+
+	const handleSelect = (e) => {
+		const { name } = e.target;
+		const isSelected = e.target.options[e.target.selectedIndex].value;
+		setVal({ ...val, [name]: isSelected });
+	};
 
 	const handleSubmit = (e) => {
-		e.preventDefault();    
+		e.preventDefault();
 		setErr(check(val));
 	};
 
@@ -95,30 +95,30 @@ function Join() {
 		setErr({});
 	};
 
-	useEffect(() => {	
-    //객체의 키값을 반환하는 메서드
-    const len = Object.keys(err).length;  
-    
-    if(len===0 && isSubmit ){
-      setSuccess(true);
-      //handleReset();
-      //err값이 의존성으로 등록되어 있는 useEffect안에
-      //다시 err 스테이트를 변경하는 함수나 구문이 있으면 무한루프에 빠지니 주의
-    }else{
-      setSuccess(false);
-    }
+	useEffect(() => {
+		//객체의 키값을 반환하는 메서드
+		const len = Object.keys(err).length;
+
+		if (len === 0 && isSubmit) {
+			setSuccess(true);
+			//handleReset();
+			//err값이 의존성으로 등록되어 있는 useEffect안에
+			//다시 err 스테이트를 변경하는 함수나 구문이 있으면 무한루프에 빠지니 주의
+		} else {
+			setSuccess(false);
+		}
 	}, [err]);
 
-  //success 스테이트값을 의존성 배열로 해서
-  useEffect(()=>{
-    //success값이 true로 변경되면
-    //기존 인풋요소 초기화
-    handleReset();
-  },[success]);
+	//success 스테이트값을 의존성 배열로 해서
+	useEffect(() => {
+		//success값이 true로 변경되면
+		//기존 인풋요소 초기화
+		handleReset();
+	}, [success]);
 
 	return (
-		<Layout name={'Join'}>
-      {success ? <h2>회원가입을 축하합니다.</h2> : null}
+		<Layout name={'Join'} imgSrc={'/img/sub3.jpg'}>
+			{success ? <h2>회원가입을 축하합니다.</h2> : null}
 			<form onSubmit={handleSubmit}>
 				<fieldset>
 					<legend>회원가입 폼 양식</legend>
@@ -193,22 +193,22 @@ function Join() {
 									<span className='err'>{err.email}</span>
 								</td>
 							</tr>
-              {/* eduction */}
-              <tr>
-                <th scope='row'>
-                  <label htmlFor="edu">EDUCATION</label>
-                </th>
-                <td>
-                  <select name="edu" id="edu" onChange={handleSelect}>
-                    <option value="">학력을 선택하세요</option>
-                    <option value="elementary-school">초등학교 졸업</option>
-                    <option value="middle-school">중학교 졸업</option>
-                    <option value="high-school">고등학교 졸업</option>
-                    <option value="collegs">대학교 졸업</option>
-                  </select>
-                  <span className="err">{err.edu}</span>
-                </td>
-              </tr>
+							{/* eduction */}
+							<tr>
+								<th scope='row'>
+									<label htmlFor='edu'>EDUCATION</label>
+								</th>
+								<td>
+									<select name='edu' id='edu' onChange={handleSelect}>
+										<option value=''>학력을 선택하세요</option>
+										<option value='elementary-school'>초등학교 졸업</option>
+										<option value='middle-school'>중학교 졸업</option>
+										<option value='high-school'>고등학교 졸업</option>
+										<option value='collegs'>대학교 졸업</option>
+									</select>
+									<span className='err'>{err.edu}</span>
+								</td>
+							</tr>
 							{/* gender */}
 							<tr>
 								<th scope='row'>GENDER</th>
@@ -243,7 +243,7 @@ function Join() {
 										onChange={handleCheck}
 									/>
 
-                  <label htmlFor='game'>Game</label>
+									<label htmlFor='game'>Game</label>
 									<input
 										type='checkbox'
 										name='interests'
@@ -251,14 +251,14 @@ function Join() {
 										onChange={handleCheck}
 									/>
 
-                  <label htmlFor='music'>Music</label>
+									<label htmlFor='music'>Music</label>
 									<input
 										type='checkbox'
 										name='interests'
 										id='music'
 										onChange={handleCheck}
 									/>
-                  <span className="err">{err.interests}</span>
+									<span className='err'>{err.interests}</span>
 								</td>
 							</tr>
 							{/* comments */}
@@ -281,9 +281,13 @@ function Join() {
 							<tr>
 								<th colSpan='2'>
 									<input type='reset' value='CANCEL' onClick={handleReset} />
-									<input type='submit' value='SEND' onClick={()=>{
-                    setIsSubmit(true);                    
-                  }} />
+									<input
+										type='submit'
+										value='SEND'
+										onClick={() => {
+											setIsSubmit(true);
+										}}
+									/>
 								</th>
 							</tr>
 						</tbody>

@@ -22,7 +22,7 @@ function Gallery() {
 	};
 
 	return (
-		<Layout name={'Gallery'}>
+		<Layout name={'Gallery'} imgSrc={'/img/sub2.jpg'}>
 			<button onClick={initGallery}>갤러리 초기화</button>
 
 			<div className='inputBox'>

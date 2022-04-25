@@ -31,19 +31,19 @@ function Location() {
 	];
 	const [map, setMap] = useState(null);
 	const [traffic, setTraffic] = useState(false);
-	const [mapInfo] = useState(info);	
+	const [mapInfo] = useState(info);
 	const [index, setIndex] = useState(0);
 
-	useEffect(() => {	
-    //기존 지도 안쪽의 컨텐츠를 비워서 초기화
-    container.current.innerHTML='';
+	useEffect(() => {
+		//기존 지도 안쪽의 컨텐츠를 비워서 초기화
+		container.current.innerHTML = '';
 
 		const options = {
 			center: mapInfo[index].latlng,
 			level: 3,
 		};
 		const mapInstance = new kakao.maps.Map(container.current, options);
-	
+
 		const markerPosition = mapInfo[index].latlng;
 		const imgSrc = mapInfo[index].imgSrc;
 		const imgSize = mapInfo[index].imgSize;
@@ -53,42 +53,39 @@ function Location() {
 			position: markerPosition,
 			image: markerImg,
 		});
-		
+
 		marker.setMap(mapInstance);
 
+		const mapTypeControl = new kakao.maps.MapTypeControl();
+		mapInstance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
 
-    const mapTypeControl = new kakao.maps.MapTypeControl();   
-    mapInstance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
+		const zoomControl = new kakao.maps.ZoomControl();
+		mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
 
-    const zoomControl = new kakao.maps.ZoomControl();
-    mapInstance.addControl(zoomControl, kakao.maps.ControlPosition.LEFT);
+		//지도 위치 가운데 이동 함수
+		const mapInit = () => {
+			console.log('지도위치 가운데 변경');
+			mapInstance.setCenter(mapInfo[index].latlng);
+		};
 
-    //지도 위치 가운데 이동 함수
-    const mapInit = () =>{
-      console.log('지도위치 가운데 변경')
-      mapInstance.setCenter(mapInfo[index].latlng);
-    }
-
-    setMap(mapInstance);
+		setMap(mapInstance);
 
 		//index 값이 변경될때마다 참조된 branch의 모든 li를 비활성화 시키고
 		const lis = branch.current.querySelectorAll('li');
-		for(const li of lis) li.classList.remove('on');
+		for (const li of lis) li.classList.remove('on');
 		//현재 index순번의 버튼만 활성화
-		lis[index].classList.add('on');		
-	
+		lis[index].classList.add('on');
 
-    //브라우저 리사이즈시 mapInit호츨
-    window.addEventListener('resize', mapInit);
+		//브라우저 리사이즈시 mapInit호츨
+		window.addEventListener('resize', mapInit);
 
-    //해당 컴포넌트가 사라질때 전역 window에 등록되어 있는 이벤트 핸들러도 같이 삭제
-    return ()=>{
-      window.removeEventListener('resize', mapInit);
-    }			
-		
-	}, [index]); 
+		//해당 컴포넌트가 사라질때 전역 window에 등록되어 있는 이벤트 핸들러도 같이 삭제
+		return () => {
+			window.removeEventListener('resize', mapInit);
+		};
+	}, [index]);
 
-	useEffect(() => {		
+	useEffect(() => {
 		handleTraffic();
 	}, [traffic]);
 
@@ -101,18 +98,16 @@ function Location() {
 	};
 
 	return (
-		<Layout name={'Location'}>
+		<Layout name={'Location'} imgSrc={'/img/sub4.jpg'}>
 			<div id='map' ref={container}></div>
 			<button onClick={() => setTraffic(!traffic)}>
 				{traffic ? 'Traffic OFF' : 'Traffic On'}
 			</button>
 
-			<ul className='branch' ref={branch}>		
+			<ul className='branch' ref={branch}>
 				{mapInfo.map((info, idx) => {
 					return (
-						<li
-							key={idx}
-							onClick={() => setIndex(idx)}>
+						<li key={idx} onClick={() => setIndex(idx)}>
 							{info.title}
 						</li>
 					);

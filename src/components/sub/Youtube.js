@@ -10,7 +10,7 @@ function Youtube() {
 
 	return (
 		<>
-			<Layout name={'Youtube'}>
+			<Layout name={'Youtube'} imgSrc={'/img/sub2.jpg'}>
 				{vidData.map((item, idx) => {
 					const desc = item.snippet.description;
 					const date = item.snippet.publishedAt;

@@ -6,7 +6,7 @@ function Member() {
 	const members = useSelector((state) => state.memberReducer.members);
 
 	return (
-		<Layout name={'Member'}>
+		<Layout name={'Member'} imgSrc={'/img/sub1.jpg'}>
 			<ul className='memberList'>
 				{members.map((member, idx) => {
 					return (

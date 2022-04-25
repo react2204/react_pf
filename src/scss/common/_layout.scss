@@ -1,19 +1,26 @@
 .content {
 	background: #efefef;
-	
+
 	figure {
 		width: 100%;
 		height: 300px;
 		background: #bbb;
+		overflow: hidden;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
 	}
 
-	>.inner {
+	> .inner {
 		width: 1180px;
 		min-height: 800px;
 		margin: 0px auto;
 		padding: 100px 0px 150px;
 		position: relative;
-		transform: translateY(100px);		
+		transform: translateY(100px);
 		opacity: 0;
 		transition: 1s;
 
@@ -25,7 +32,7 @@
 	}
 
 	&.on {
-		>.inner {
+		> .inner {
 			transform: translateY(0px);
 			opacity: 1;
 		}
@@ -34,7 +41,7 @@
 
 @media screen and (max-width: $tablet) {
 	.content {
-		>.inner {
+		> .inner {
 			width: 100%;
 			padding: 0px 40px;
 		}
