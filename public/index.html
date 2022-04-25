@@ -45,6 +45,7 @@
   <div class="mask">LOADING...</div>
 
   <script>
+    //중요 : 로컬에서는 테스트가 안되므로 무조건 배포한뒤..캐싱될 소스 주소를 배포된 서버상의 URL로 입력
     const imgs = [
       'https://react2204.github.io/react_pf/img/sub1.jpg',
       'https://react2204.github.io/react_pf/img/sub2.jpg',
@@ -67,19 +68,28 @@
     let tags = '';
 
 
-    //동적으로 배열에 있는 이미지 소스를 가지고 강제로 img dom을 만들어서 index.html에 꽂아넣어서  캐싱처리
+    //동적으로 배열에 있는 이미지 소스와 영상 소스를 가지고 강제로 dom을 만들어서 index.html에 꽂아넣어서 캐싱처리하고 
+    //캐싱되는 동안 마스크화면을 보여주줌
+    //모든 DOM 소스가 캐싱완료되면 마스크와 강제로 만들어진 DOM 프레임인 defaults 모두 제거
     createDOM();
 
-    //동적으로 만들어진 이미지돔의 소스이미지가 모두 캐싱되면 
+    //Promise.all로 loadImg와 loadVid함수가 모두 프로미스 객체를 반환할때까지 기다리며 동기화처리
     Promise.all([loadImg(), loadVid()])
+      //두 함수의 프로미스객체가 생성되면 해당값은 then문에서 배열로 반환됨
       .then((result) => {
         console.log(result);
+        //배열의 값을 비구조화 할당으로 각각 변수에 저장하고
         const [loadedImg, loadedVid] = result;
 
+        //두개의 값이 모두 true를 리턴하면  (모든 DOM의 소스가 로딩완료되면)
         if (loadedImg && loadedVid) {
+          //마스크에 off클래스를 붙여서 2s동안 fadeOut모션처리를 하고
           mask.classList.add('off');
+
+          //마스크 페이드아웃이 완료되면 이제 필요없는 마스크와  캐싱돔 프레임은 제거
           setTimeout(() => {
-            mask.remove()
+            mask.remove();
+            defaults.remove();
           }, 2000);
         }
 
