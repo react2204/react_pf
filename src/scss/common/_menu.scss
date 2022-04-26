@@ -19,9 +19,19 @@ nav {
 
 	#gnb {
 		li {
+			margin: 40px;
 			a {
 				color: #fff;
+				font-size: 20px;
 			}
+		}
+		.cursor {
+			width: 20px;
+			height: 20px;
+			background: #fff;
+			position: fixed;
+			border-radius: 50px;
+			z-index: 4;
 		}
 	}
 }
