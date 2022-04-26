@@ -1,86 +1,71 @@
 import Layout from '../common/Layout.js';
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+//redux-saga hook import
+import { useSelector, useDispatch } from 'react-redux';
 import Maconry from 'react-masonry-component';
-//팝업 임포트
 import Popup from '../common/Popup';
+import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
 
 function Masonry() {
 	const path = process.env.PUBLIC_URL;
 	const masonryOptions = {
 		transitionDuration: '0.5s',
 	};
-
 	const frame = useRef(null);
 	const input = useRef(null);
-	//popup컴포넌트 참조
 	const pop = useRef(null);
-	//썸네일 클릭시 담길 순서 state
 	const [index, setIndex] = useState(0);
-	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [enableClick, setEnableClick] = useState(true);
 
-	const getFlickr = async (opt) => {
-		const key = '89aae050d1d8c006bdb5bf866029199d';
-		const method1 = 'flickr.interestingness.getList';
-		const method2 = 'flickr.photos.search';
-		const num = opt.count;
-		let url = '';
+	//get daga from saga
+	const { flickr } = useSelector((state) => state.flickrReducer);
+	const dispatch = useDispatch();
+	const [opt, setOpt] = useState({ type: 'interest' });
 
-		if (opt.type === 'interest') {
-			url = `https://www.flickr.com/services/rest/?method=${method1}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
-		}
-
-		if (opt.type === 'search') {
-			url = `https://www.flickr.com/services/rest/?method=${method2}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
-		}
-
-		await axios.get(url).then((json) => {
-			if (json.data.photos.photo.length === 0) {
-				alert('해당 검색어의 이미지가 없습니다');
-				return;
-			}
-			setItems(json.data.photos.photo);
-		});
-
+	//로딩바 숨기고 컨텐츠 보이는 함수
+	const endLoading = () => {
 		setTimeout(() => {
 			frame.current.classList.add('on');
 			setLoading(false);
-
-			setTimeout(() => {
-				setEnableClick(true);
-			}, 1000);
-		}, 500);
+			setTimeout(() => setEnableClick(true), 1000);
+		}, 1000);
 	};
 
-	const showSearch = () => {
-		const result = input.current.value.trim();
-		if (!result || result === '') {
+	//초기 interest갤러리 보이는 함수
+	const initGallery = () => {
+		//재클릭 가능 막고 로딩바 보이고 화면 숨김
+		setEnableClick(false);
+		setLoading(true);
+		frame.current.classList.remove('on');
+
+		//opt값을 변경해서 saga에 새로 데이터 변경요청
+		setOpt({ type: 'interest' });
+		//로딩바 숨기고 화면 출력
+		endLoading();
+	};
+
+	//검색 갤러리 보이는 함수
+	const searchTag = () => {
+		const tag = input.current.value.trim();
+		if (!tag) {
 			alert('검색어를 입력하세요.');
 			return;
 		}
+		setEnableClick(false);
+		setLoading(true);
+		frame.current.classList.remove('on');
 
-		if (enableClick) {
-			setEnableClick(false);
-			setLoading(true);
-			frame.current.classList.remove('on');
-
-			getFlickr({
-				type: 'search',
-				count: 30,
-				tags: result,
-			});
-			input.current.value = '';
-		}
+		setOpt({ type: 'search', tags: tag });
+		input.current.value = '';
+		endLoading();
 	};
 
+	//opt값이 바뀔때마다 전역의 flickr 데이터 수정해서 전달
 	useEffect(() => {
-		getFlickr({
-			type: 'interest',
-			count: 30,
-		});
-	}, []);
+		dispatch({ type: 'FLICKR_START', opt });
+		endLoading();
+	}, [opt]);
 
 	return (
 		<>
@@ -94,33 +79,30 @@ function Masonry() {
 						type='text'
 						ref={input}
 						onKeyUp={(e) => {
-							if (e.key === 'Enter') showSearch();
+							if (e.key === 'Enter') {
+								if (enableClick) searchTag();
+							}
 						}}
 					/>
-					<button onClick={showSearch}>search</button>
+					<button
+						onClick={() => {
+							if (enableClick) searchTag();
+						}}>
+						search
+					</button>
 				</div>
 
 				<button
 					onClick={() => {
-						if (enableClick) {
-							setEnableClick(false);
-							setLoading(true);
-							frame.current.classList.remove('on');
-
-							getFlickr({
-								type: 'interest',
-								count: 30,
-							});
-						}
+						if (enableClick) initGallery();
 					}}>
 					interest 갤러리 보기
 				</button>
 
 				<div className='frame' ref={frame}>
 					<Maconry elementType={'div'} options={masonryOptions}>
-						{items.map((item, idx) => {
+						{flickr.map((item, idx) => {
 							return (
-								// article클릭시 순서state변경하고 팝업오픈함수 호출
 								<article
 									key={idx}
 									onClick={() => {
@@ -142,11 +124,10 @@ function Masonry() {
 				</div>
 			</Layout>
 
-			{/* 팝업  컴포넌트 추가 */}
 			<Popup ref={pop}>
-				{items.length !== 0 && (
+				{flickr.length !== 0 && (
 					<img
-						src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`}
+						src={`https://live.staticflickr.com/${flickr[index].server}/${flickr[index].id}_${flickr[index].secret}_b.jpg`}
 					/>
 				)}
 				<span onClick={() => pop.current.close()}>close</span>
