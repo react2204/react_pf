@@ -2,7 +2,6 @@ import Layout from '../common/Layout';
 import { useState, useEffect } from 'react';
 
 function Join() {
-	console.log('join 컴포넌트 호출');
 	const initVal = {
 		userid: '',
 		pwd1: '',
@@ -19,6 +18,7 @@ function Join() {
 	const [isSubmit, setIsSubmit] = useState(false);
 
 	const check = (val) => {
+		console.log('check');
 		const errs = {};
 		const eng = /[a-zA-Z]/;
 		const num = /[0-9]/;
@@ -94,12 +94,10 @@ function Join() {
 	const handleReset = () => {
 		setVal(initVal);
 		setErr({});
-		//handelReset이 실행될떄 회원가입 축하메세지가 뜨지 않도록 수정
 		setIsSubmit(false);
 	};
 
 	useEffect(() => {
-		console.log('err스테이트 변경');
 		const len = Object.keys(err).length;
 
 		if (len === 0 && isSubmit) {
@@ -110,7 +108,6 @@ function Join() {
 	}, [err]);
 
 	useEffect(() => {
-		console.log('success스테이트 변경');
 		handleReset();
 	}, [success]);
 

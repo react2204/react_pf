@@ -2,6 +2,8 @@ import Layout from '../common/Layout.js';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Maconry from 'react-masonry-component';
+//팝업 임포트
+import Popup from '../common/Popup';
 
 function Masonry() {
 	const path = process.env.PUBLIC_URL;
@@ -10,8 +12,11 @@ function Masonry() {
 	};
 
 	const frame = useRef(null);
-	//검색창을 참조할 객체 생성
 	const input = useRef(null);
+	//popup컴포넌트 참조
+	const pop = useRef(null);
+	//썸네일 클릭시 담길 순서 state
+	const [index, setIndex] = useState(0);
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [enableClick, setEnableClick] = useState(true);
@@ -32,8 +37,6 @@ function Masonry() {
 		}
 
 		await axios.get(url).then((json) => {
-			//api호출시 해당 검색어에 대한 결과값이 없으면
-			//경고창 띄우고 해당 함수 종료
 			if (json.data.photos.photo.length === 0) {
 				alert('해당 검색어의 이미지가 없습니다');
 				return;
@@ -80,57 +83,75 @@ function Masonry() {
 	}, []);
 
 	return (
-		<Layout name={'Masonry'} imgSrc={'/img/sub5.jpg'}>
-			{loading ? (
-				<img className='loading' src={path + '/img/loading.gif'} />
-			) : null}
+		<>
+			<Layout name={'Masonry'} imgSrc={'/img/sub5.jpg'}>
+				{loading ? (
+					<img className='loading' src={path + '/img/loading.gif'} />
+				) : null}
 
-			<div className='searchBox'>
-				<input
-					type='text'
-					ref={input}
-					onKeyUp={(e) => {
-						if (e.key === 'Enter') showSearch();
-					}}
-				/>
-				<button onClick={showSearch}>search</button>
-			</div>
+				<div className='searchBox'>
+					<input
+						type='text'
+						ref={input}
+						onKeyUp={(e) => {
+							if (e.key === 'Enter') showSearch();
+						}}
+					/>
+					<button onClick={showSearch}>search</button>
+				</div>
 
-			<button
-				onClick={() => {
-					if (enableClick) {
-						setEnableClick(false);
-						setLoading(true);
-						frame.current.classList.remove('on');
+				<button
+					onClick={() => {
+						if (enableClick) {
+							setEnableClick(false);
+							setLoading(true);
+							frame.current.classList.remove('on');
 
-						getFlickr({
-							type: 'interest',
-							count: 500,
-						});
-					}
-				}}>
-				interest 갤러리 보기
-			</button>
+							getFlickr({
+								type: 'interest',
+								count: 30,
+							});
+						}
+					}}>
+					interest 갤러리 보기
+				</button>
 
-			<div className='frame' ref={frame}>
-				<Maconry elementType={'div'} options={masonryOptions}>
-					{items.map((item, idx) => {
-						return (
-							<article key={idx}>
-								<div className='inner'>
-									<div className='pic'>
-										<img
-											src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
-										/>
+				<div className='frame' ref={frame}>
+					<Maconry elementType={'div'} options={masonryOptions}>
+						{items.map((item, idx) => {
+							return (
+								// article클릭시 순서state변경하고 팝업오픈함수 호출
+								<article
+									key={idx}
+									onClick={() => {
+										setIndex(idx);
+										pop.current.open();
+									}}>
+									<div className='inner'>
+										<div className='pic'>
+											<img
+												src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+											/>
+										</div>
+										<h2>{item.title}</h2>
 									</div>
-									<h2>{item.title}</h2>
-								</div>
-							</article>
-						);
-					})}
-				</Maconry>
-			</div>
-		</Layout>
+								</article>
+							);
+						})}
+					</Maconry>
+				</div>
+			</Layout>
+
+			{/* 팝업  컴포넌트 추가 */}
+			<Popup ref={pop}>
+				{items.length !== 0 && (
+					<img
+						src={`https://live.staticflickr.com/${items[index].server}/${items[index].id}_${items[index].secret}_b.jpg`}
+					/>
+				)}
+				<span onClick={() => pop.current.close()}>close</span>
+			</Popup>
+		</>
 	);
 }
 
