@@ -9,8 +9,8 @@ function Layout(props) {
 	//const [cursorY, setCursorY] = useState(0);
 
 	const handleMove = (e) => {
-		cursor.current.style.left = e.pageX + 'px';
-		cursor.current.style.top = e.pageY + 'px';
+		cursor.current.style.left = e.clientX + 'px';
+		cursor.current.style.top = e.clientY + 'px';
 	};
 
 	useEffect(() => {
