@@ -34,7 +34,10 @@ function Youtube() {
 						<article
 							key={idx}
 							onClick={() => {
-								setIndex(idx);
+								//article로는 첫번째 순서이지만
+								//데이터로는 3번쨰 순서이므로 기존 idx값에 2를 더함
+								//해당 순번은 추후 팝업데이터 호출할때 필요
+								setIndex(idx + 2);
 								pop.current.open();
 							}}>
 							<img src={item.snippet.thumbnails.medium.url} />
