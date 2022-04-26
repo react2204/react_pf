@@ -5,13 +5,28 @@ import Popup from '../common/Popup';
 
 function Youtube() {
 	const vidData = useSelector((state) => state.youtubeReducer.youtube);
+	//기존 데이터를 2개의 배열로 분리복사  (얕은복사)
+	const vids1 = vidData.slice(0, 2);
+	const vids2 = vidData.slice(2, 5);
 	const pop = useRef(null);
 	const [index, setIndex] = useState(0);
 
 	return (
 		<>
 			<Layout name={'Youtube'} imgSrc={'/img/sub2.jpg'}>
-				{vidData.map((item, idx) => {
+				<ul>
+					{/* 첫번째 분리한 배열로는 ul li출력 */}
+					{vids1.map((item, idx) => {
+						return (
+							<li key={idx}>
+								<img src={item.snippet.thumbnails.medium.url} />
+							</li>
+						);
+					})}
+				</ul>
+
+				{/* 두번째 분리할  배열로는 article출력 */}
+				{vids2.map((item, idx) => {
 					const desc = item.snippet.description;
 					const date = item.snippet.publishedAt;
 
