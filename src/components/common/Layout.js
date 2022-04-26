@@ -4,16 +4,20 @@ const path = process.env.PUBLIC_URL;
 function Layout(props) {
 	let frame = useRef(null);
 	const cursor = useRef(null);
+	//const [isCursor, setIsCursor] = useState(false);
 	//const [cursorX, setCursorX] = useState(0);
 	//const [cursorY, setCursorY] = useState(0);
 
-	window.addEventListener('mousemove', (e) => {
+	const handleMove = (e) => {
 		cursor.current.style.left = e.pageX + 'px';
 		cursor.current.style.top = e.pageY + 'px';
-	});
+	};
 
 	useEffect(() => {
 		frame.current.classList.add('on');
+		window.addEventListener('mousemove', handleMove);
+
+		return () => window.removeEventListener('mousemove', handleMove);
 	}, []);
 
 	return (
