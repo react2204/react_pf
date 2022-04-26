@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Maconry from 'react-masonry-component';
 import Popup from '../common/Popup';
-import { faArrowsLeftRightToLine } from '@fortawesome/free-solid-svg-icons';
+import { getAllByPlaceholderText } from '@testing-library/react';
 
 function Masonry() {
 	const path = process.env.PUBLIC_URL;
@@ -34,14 +34,11 @@ function Masonry() {
 
 	//초기 interest갤러리 보이는 함수
 	const initGallery = () => {
-		//재클릭 가능 막고 로딩바 보이고 화면 숨김
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
 
-		//opt값을 변경해서 saga에 새로 데이터 변경요청
 		setOpt({ type: 'interest' });
-		//로딩바 숨기고 화면 출력
 		endLoading();
 	};
 
