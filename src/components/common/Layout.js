@@ -4,9 +4,6 @@ const path = process.env.PUBLIC_URL;
 function Layout(props) {
 	let frame = useRef(null);
 	const cursor = useRef(null);
-	//const [isCursor, setIsCursor] = useState(false);
-	//const [cursorX, setCursorX] = useState(0);
-	//const [cursorY, setCursorY] = useState(0);
 
 	const handleMove = (e) => {
 		cursor.current.style.left = e.clientX + 'px';
@@ -14,6 +11,15 @@ function Layout(props) {
 	};
 
 	useEffect(() => {
+		//서브페이지 비주얼 영역에서 마우스가 벗어나면 커서 사라지게 이벤트 처리
+		const figure = frame.current.querySelector('figure');
+		figure.addEventListener('mouseenter', () => {
+			cursor.current.style.display = 'block';
+		});
+		figure.addEventListener('mouseleave', () => {
+			cursor.current.style.display = 'none';
+		});
+
 		frame.current.classList.add('on');
 		window.addEventListener('mousemove', handleMove);
 
